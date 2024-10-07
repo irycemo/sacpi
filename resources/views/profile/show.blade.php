@@ -1,9 +1,8 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
+@extends('layouts.admin')
+
+@section('content')
+
+    <h1 class="text-3xl tracking-widest py-3 px-6 text-gray-600 rounded-xl border-b-2 border-gray-500 font-thin mb-6  bg-white">{{ __('Profile') }}</h1>
 
     <div>
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
@@ -29,9 +28,9 @@
                 <x-section-border />
             @endif
 
-            <div class="mt-10 sm:mt-0">
+           {{--  <div class="mt-10 sm:mt-0">
                 @livewire('profile.logout-other-browser-sessions-form')
-            </div>
+            </div> --}}
 
             @if (Laravel\Jetstream\Jetstream::hasAccountDeletionFeatures())
                 <x-section-border />
@@ -42,4 +41,5 @@
             @endif
         </div>
     </div>
-</x-app-layout>
+
+@endsection
