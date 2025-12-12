@@ -29,7 +29,6 @@ return new class extends Migration
             $table->decimal('total', 10, 4);
             $table->string('status'); //Pagado o Cancelado
             $table->string('tipo'); //Ventanilla o En Línea
-            $table->string('folio_recibo');
             $table->string('observaciones')->nullable();
 
             $table->foreignId('creado_por')->nullable()->references('id')->on('users');

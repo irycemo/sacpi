@@ -11,7 +11,6 @@ use Carbon\Carbon;
 use App\Models\Uma;
 use App\Traits\IncpTrait;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Support\Facades\Storage;
 use NumberFormatter;
 
 
@@ -60,79 +59,31 @@ class Avisos extends Component
 
     }
 
-    public function generarPDF()
+    public function generarPDF(Predio $predio, $pago)
     {
-        //Obtener la informacion del predio desde el padrón de sacpi
-        $cuentapredial = explode("-",$this->cuenta_predial);
-        $predio = Predio::where('localidad',$cuentapredial[0])
-                        ->where('oficina',$cuentapredial[1])
-                        ->where('tipo_predio',$cuentapredial[2])
-                        ->where('numero_registro',$cuentapredial[3])
-                        ->first();
 
-        //dd($predio);
+        $formatter = new NumberFormatter("es", NumberFormatter::SPELLOUT);
 
-        // Datos que quieres pasar a la vista
-        $datos = [
-            'foliorecibo' => Carbon::now()->format('Y').'-'.$this->folio_recibo.'-'.auth()->user()->id,
-            'fechayhora' => Carbon::now()->format('d-m-Y H:i:s'),
+        $total_letra = $formatter->format($this->total);
+
+        $pdf = Pdf::loadView('reciboisai', [
+            'pago' => $pago,
             'contribuyente' => $predio->primerPropietario(),
             'cuenta_predial' => $predio->cuentaPredial(),
             'clave_catastral' => $predio->claveCatastral(),
             'valor_catastral' => $predio->valor_catastral,
             'ubicacion_predio' => $predio->Ubicacion(),
             'notificacion' => $predio->primerPropietarioDomicilio(),
-            'impuesto' => $this->isai_a_pagar,
+            'impuesto' => $this->aviso_seleccionado['isai'],
             'actualizacion' => $this->actualizacion,
             'multas' => $this->multas,
             'recargos' => $this->recargos,
             'total' => $this->total,
-            'importeletra' => $this->importeconletra($this->total),
+            'total_letra' => $total_letra,
+            'oficina' => auth()->user()->oficina
+        ]);
 
-        ];
-
-        //dd($datos);
-
-        // Cargar la vista y pasarle los datos
-        $pdf = Pdf::loadView('reciboisai', ['datos' => $datos]);
-
-        $path = 'isai_F'.$this->folio_aviso.'_'.Carbon::now()->format('dmY_His').'.pdf';
-
-        //dd($path);
-
-
-        Storage::disk('recibos')->put($path,$pdf->output());
-
-        //$pdf->render();
-
-        //$path = storage_path('app/public/img/reporte.pdf');
-        //$pdf->save($path);
-
-        // Descargar el archivo
-        //return $pdf->download('reporte.pdf');
-
-        // O mostrarlo en el navegador
-        //return $pdf->stream($path);
-    }
-
-    function importeconletra($numero)
-    {
-
-        $formatter = new NumberFormatter("es", NumberFormatter::SPELLOUT);
-
-        // Separar parte entera y decimal
-        $entero = floor($numero);
-        $decimal = round(($numero - $entero) * 100);
-
-        $texto = ucfirst($formatter->format($entero)) . " pesos";
-
-        if ($decimal > 0) {
-            $texto .= " con " . $decimal . "/100 M.N.";
-        } else {
-            $texto .= " 00/100 M.N.";
-        }
-
-        return $texto;
+        return $pdf;
 
     }
 
@@ -180,9 +131,8 @@ class Avisos extends Component
 
     }
 
-    public function cobrar_isai():void
+    public function cobrar()
     {
-
 
         $predio = Predio::where('localidad', $this->aviso_seleccionado['localidad'])
                         ->where('oficina', $this->aviso_seleccionado['oficina'])
@@ -199,13 +149,14 @@ class Avisos extends Component
 
         try{
 
-            $this->folio_recibo = $this->calcularFolio();
-
-            /* $pagoisai = Pagosisai::create([
+            $pago_isai = Pagosisai::create([
                 'año' => now()->format('Y'),
-                'folio' => ,
+                'folio' => (Pagosisai::where('año', now()->format('Y'))->where('usuario', auth()->user()->clave)->max('folio') ?? 0) + 1,
                 'usuario' => auth()->user()->clave,
-                'notaria' => $this->aviso_seleccionado['notaria'],
+                'aviso_año' => $this->aviso_seleccionado['año'],
+                'aviso_folio' => $this->aviso_seleccionado['folio'],
+                'aviso_usuario' => $this->aviso_seleccionado['usuario'],
+                'notaria' => $this->aviso_seleccionado['notaria_numero'],
                 'isai' => $this->aviso_seleccionado['isai'],
                 'actualizacion' => $this->actualizacion,
                 'multas' => $this->multas,
@@ -214,14 +165,18 @@ class Avisos extends Component
                 'tipo' => 'ventanilla',
                 'total' => $this->total,
                 'creado_por' => auth()->user()->id
-            ]); */
+            ]);
 
-            $this->generarPDF();
+            $pdf = $this->generarPDF($predio, $pago_isai);
 
             $this->modal = false;
+
             $this->dispatch('mostrarMensaje', ['success', "Pago realizado con éxito"]);
 
-
+            return response()->streamDownload(
+                fn () => print($pdf->output()),
+                'pago_isai.pdf'
+            );
 
         } catch (\Throwable $th) {
 
@@ -250,28 +205,27 @@ class Avisos extends Component
     public function render()
     {
 
-
         $json = '[
-            {"folio":"2025-10-34","estatus":"AUTORIZADO","cuenta_predial":"1-101-1-266208","notaria":"Notaría 12","fecha_reduccion":"2024-08-15","isai":15000},
-            {"folio":"2025-152-94","estatus":"AUTORIZADO","cuenta_predial":"1-101-1-266209","notaria":"Notaría 4","fecha_reduccion":"2025-08-16","isai":20000},
-            {"folio":"2025-254-121","estatus":"AUTORIZADO","cuenta_predial":"1-101-1-266210","notaria":"Notaría 7","fecha_reduccion":"2025-08-17","isai":18000},
-            {"folio":"2025-18-5","estatus":"AUTORIZADO","cuenta_predial":"1-101-1-266208","notaria":"Notaría 22","fecha_reduccion":"2025-08-18","isai":0},
-            {"folio":"2025-100-134","estatus":"AUTORIZADO","cuenta_predial":"1-101-1-266208","notaria":"Notaría 10","fecha_reduccion":"2025-08-19","isai":22000},
-            {"folio":"2025-254-14","estatus":"AUTORIZADO","cuenta_predial":"1-101-1-266208","notaria":"Notaría 5","fecha_reduccion":"2025-08-20","isai":17500},
-            {"folio":"2025-123-25","estatus":"AUTORIZADO","cuenta_predial":"1-101-1-266208","notaria":"Notaría 18","fecha_reduccion":"2025-08-21","isai":19500},
-            {"folio":"2025-478-18","estatus":"AUTORIZADO","cuenta_predial":"1-101-1-266208","notaria":"Notaría 30","fecha_reduccion":"2025-08-22","isai":21000},
-            {"folio":"2025-21-201","estatus":"AUTORIZADO","cuenta_predial":"1-101-1-266208","notaria":"Notaría 2","fecha_reduccion":"2025-08-23","isai":16000},
-            {"folio":"2025-1-54","estatus":"AUTORIZADO","cuenta_predial":"1-101-1-266208","notaria":"Notaría 15","fecha_reduccion":"2025-08-24","isai":25000},
-            {"folio":"2025-10-34","estatus":"AUTORIZADO","cuenta_predial":"1-101-1-266208","notaria":"Notaría 12","fecha_reduccion":"2024-08-15","isai":15000},
-            {"folio":"2025-152-94","estatus":"AUTORIZADO","cuenta_predial":"1-101-1-266209","notaria":"Notaría 4","fecha_reduccion":"2025-08-16","isai":20000},
-            {"folio":"2025-254-121","estatus":"AUTORIZADO","cuenta_predial":"1-101-1-266210","notaria":"Notaría 7","fecha_reduccion":"2025-08-17","isai":18000},
-            {"folio":"2025-18-5","estatus":"AUTORIZADO","cuenta_predial":"1-101-1-266208","notaria":"Notaría 22","fecha_reduccion":"2025-08-18","isai":0},
-            {"folio":"2025-100-134","estatus":"AUTORIZADO","cuenta_predial":"1-101-1-266208","notaria":"Notaría 10","fecha_reduccion":"2025-08-19","isai":22000},
-            {"folio":"2025-254-14","estatus":"AUTORIZADO","cuenta_predial":"1-101-1-266208","notaria":"Notaría 5","fecha_reduccion":"2025-08-20","isai":17500},
-            {"folio":"2025-123-25","estatus":"AUTORIZADO","cuenta_predial":"1-101-1-266208","notaria":"Notaría 18","fecha_reduccion":"2025-08-21","isai":19500},
-            {"folio":"2025-478-18","estatus":"AUTORIZADO","cuenta_predial":"1-101-1-266208","notaria":"Notaría 30","fecha_reduccion":"2025-08-22","isai":21000},
-            {"folio":"2025-21-201","estatus":"AUTORIZADO","cuenta_predial":"1-101-1-266208","notaria":"Notaría 2","fecha_reduccion":"2025-08-23","isai":16000},
-            {"folio":"2025-1-54","estatus":"AUTORIZADO","cuenta_predial":"1-101-1-266208","notaria":"Notaría 15","fecha_reduccion":"2025-08-24","isai":25000}
+            {"año":"2025","folio":"10","usuario":"34","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266208","notaria_numero":"12","fecha_reduccion":"2024-08-15","isai":15000},
+            {"año":"2025","folio":"152","usuario":"94","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266209","notaria_numero":"4","fecha_reduccion":"2025-08-16","isai":20000},
+            {"año":"2025","folio":"254","usuario":"121","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266210","notaria_numero":"7","fecha_reduccion":"2025-08-17","isai":18000},
+            {"año":"2025","folio":"18","usuario":"5","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266208","notaria_numero":"22","fecha_reduccion":"2025-08-18","isai":0},
+            {"año":"2025","folio":"100","usuario":"134","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266208","notaria_numero":"10","fecha_reduccion":"2025-08-19","isai":22000},
+            {"año":"2025","folio":"254","usuario":"14","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266208","notaria_numero":"5","fecha_reduccion":"2025-08-20","isai":17500},
+            {"año":"2025","folio":"123","usuario":"25","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266208","notaria_numero":"18","fecha_reduccion":"2025-08-21","isai":19500},
+            {"año":"2025","folio":"478","usuario":"18","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266208","notaria_numero":"30","fecha_reduccion":"2025-08-22","isai":21000},
+            {"año":"2025","folio":"21","usuario":"201","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266208","notaria_numero":"2","fecha_reduccion":"2025-08-23","isai":16000},
+            {"año":"2025","folio":"1","usuario":"54","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266208","notaria_numero":"15","fecha_reduccion":"2025-08-24","isai":25000},
+            {"año":"2025","folio":"10","usuario":"34","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266208","notaria_numero":"12","fecha_reduccion":"2024-08-15","isai":15000},
+            {"año":"2025","folio":"152","usuario":"94","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266209","notaria_numero":"4","fecha_reduccion":"2025-08-16","isai":20000},
+            {"año":"2025","folio":"254","usuario":"121","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266210","notaria_numero":"7","fecha_reduccion":"2025-08-17","isai":18000},
+            {"año":"2025","folio":"18","usuario":"5","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266208","notaria_numero":"22","fecha_reduccion":"2025-08-18","isai":0},
+            {"año":"2025","folio":"100","usuario":"134","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266208","notaria_numero":"10","fecha_reduccion":"2025-08-19","isai":22000},
+            {"año":"2025","folio":"254","usuario":"14","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266208","notaria_numero":"5","fecha_reduccion":"2025-08-20","isai":17500},
+            {"año":"2025","folio":"123","usuario":"25","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266208","notaria_numero":"18","fecha_reduccion":"2025-08-21","isai":19500},
+            {"año":"2025","folio":"478","usuario":"18","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266208","notaria_numero":"30","fecha_reduccion":"2025-08-22","isai":21000},
+            {"año":"2025","folio":"21","usuario":"201","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266208","notaria_numero":"2","fecha_reduccion":"2025-08-23","isai":16000},
+            {"año":"2025","folio":"1","usuario":"54","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266208","notaria_numero":"15","fecha_reduccion":"2025-08-24","isai":25000}
         ]';
 
         $avisos = json_decode($json, true);

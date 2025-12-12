@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Aviso</title>
+    <title>Recibo ISAI</title>
 </head>
 
 <style>
@@ -156,38 +156,30 @@
     <footer>
 
         <div class="fot">
-            <p>sacpi.michoacan.gob.mx</p>
+            <p>www.irycem.michoacan.gob.mx</p>
         </div>
 
     </footer>
 
     <main>
 
-        <p class="separador"><strong>RECIBO DE PAGO DE ISAI</strong></p>
+        <div>
+
+            <p class="titulo">sistema para la administración de las contribuciones sobre la propiedad inmobiliaria</p>
+
+            <p class="titulo">h. ayuntamiento constitucional de {{ $oficina->nombre }}</p>
+
+            <p class="titulo">RECIBO DE PAGO DE ISAI</p>
+
+        </div>
 
         <div class="informacion" >
 
-            <p>
-                <strong>Tipo de comprobante: </strong> Recibo <br>
-                <strong>Folio del recibo: </strong> {{ $datos['foliorecibo'] }} <br>
-                <strong>Fecha y hora de emisión: </strong> {{ $datos['fechayhora'] }} <br>
-                <strong>Metodo de pago: </strong> EFECTIVO <br>
-                <strong>Forma de pago: </strong> UNA SOLA EXHIBICIÓN <br>
-
-
-
-                {{-- <strong>Declarante:</strong>
-
-                @if($aviso->entidad->numero_notaria)
-                    {{ $aviso->entidad->notarioTitular->name }}
-                @else
-                    {{ $aviso->entidad->dependencia }}
-                @endif,
-
-                <strong>cuenta predial:</strong> {{ $aviso->predio->cuentaPredial() }},
-
-                <strong>Clave catastral:</strong> {{ $aviso->predio->claveCatastral() }} --}}
-            </p>
+            <p><strong>Tipo de comprobante: </strong> Recibo</p>
+            <p><strong>Folio del recibo: </strong> {{ $pago->año }}-{{ $pago->folio }}-{{ $pago->usuario }}</p>
+            <p><strong>Fecha y hora de emisión: </strong> {{ $pago->created_at }}</p>
+            <p><strong>Metodo de pago: </strong> EFECTIVO</p>
+            <p><strong>Forma de pago: </strong> UNA SOLA EXHIBICIÓN</p>
 
         </div>
 
@@ -195,123 +187,61 @@
 
         <div class="informacion" >
 
-            <p>
-                <strong>Nombre del Contribuyente: </strong> {{ $datos['contribuyente'] }} <br>
-                <strong>Cuenta predial: </strong> {{ $datos['cuenta_predial'] }} <br>
-                <strong>Clave Catastral: </strong> {{ $datos['clave_catastral'] }} <br>
-                <strong>Valor Catastral: </strong> $ {{ number_format($datos['valor_catastral'],2) }} <br>
-                <strong>Concepto de pago: </strong> IMPUESTO SOBRE ADQUISICIÓN DE INMUEBLES (ISAI) <br>
-                <strong>UBICACIÓN DEL PREDIO: </strong> {{ $datos['ubicacion_predio'] }} <br>
-                <strong>DOMICILIO PARA RECIBIR NOTIFICACIONES: </strong> {{ $datos['notificacion'] }} <br>
-
-
-            </p>
+            <p><strong>Nombre del Contribuyente: </strong> {{ $contribuyente }}</p>
+            <p><strong>Cuenta predial: </strong> {{ $cuenta_predial }}</p>
+            <p><strong>Clave Catastral: </strong> {{ $clave_catastral }}</p>
+            <p><strong>Valor Catastral: </strong> $ {{ number_format($valor_catastral,2) }}</p>
+            <p><strong>Concepto de pago: </strong> IMPUESTO SOBRE ADQUISICIÓN DE INMUEBLES (ISAI)</p>
+            <p><strong>UBICACIÓN DEL PREDIO: </strong> {{ $ubicacion_predio }}</p>
+            <p><strong>DOMICILIO PARA RECIBIR NOTIFICACIONES: </strong> {{ $notificacion }}</p>
 
         </div>
 
         <p class="separador"><strong>DETALLE DEL PAGO</strong></p>
 
-        <table style="border: 1px solid black; border-collapse: collapse">
-
+        <table>
             <thead>
-
                 <tr>
-                    <th style="border: 1px solid black;">Clave</th>
-                    <th style="border: 1px solid black;">Descripción</th>
-                    <th style="border: 1px solid black;">Importe</th>
+                <th>Descripción</th>
+                <th>Importe</th>
                 </tr>
-
             </thead>
-
             <tbody>
-
-
-
-                    <tr>
-                        <td style="padding-right: 40px; border: 1px solid black;">
-                            010101
-                        </td>
-                        <td style="padding-right: 100px; border: 1px solid black;">
-                            Impuesto
-                        </td>
-                        <td style="padding-left: 40px; text-align:right; border: 1px solid black;">
-                            {{ number_format($datos['impuesto'],2) }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="padding-right: 40px; border: 1px solid black;">
-                            010101
-                        </td>
-                        <td style="padding-right: 100px; border: 1px solid black;">
-                            Actualización
-                        </td>
-                        <td style="padding-left: 40px; text-align:right; border: 1px solid black;">
-                            {{ number_format($datos['actualizacion'],2) }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="padding-right: 40px; border: 1px solid black;">
-                            090401
-                        </td>
-                        <td style="padding-right: 100px; border: 1px solid black;">
-                            Recargo
-                        </td>
-                        <td style="padding-left: 40px; text-align:right; border: 1px solid black;">
-                            {{ number_format($datos['recargos'],2) }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="padding-right: 40px; border: 1px solid black;">
-                            090104
-                        </td>
-                        <td style="padding-right: 100px; border: 1px solid black;">
-                            Multa
-                        </td>
-                        <td style="padding-left: 40px; text-align:right; border: 1px solid black;">
-                            {{ number_format($datos['multas'],2) }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="padding-right: 40px; border: 1px solid black;">
-
-                        </td>
-                        <td style="padding-right: 100px; border: 1px solid black;">
-                            <strong>Total</strong>
-                        </td>
-                        <td style="padding-left: 40px; text-align:right; border: 1px solid black;">
-                            {{ number_format($datos['total'],2) }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="3" style="text-align:center;">
-                            {{ $datos['importeletra'] }}
-                        </td>
-
-                    </tr>
-
-
-
-
-
+                <tr>
+                <td>impuesto predial</td>
+                <td>${{ number_format($impuesto, 2) }}</td>
+                </tr>
+                <tr>
+                <td>actualización</td>
+                <td>${{ number_format($actualizacion, 2) }}</td>
+                </tr>
+                <tr>
+                <td>multas</td>
+                <td>${{ number_format($multas, 2) }}</td>
+                </tr>
+                <tr>
+                <td>recargos</td>
+                <td>${{ number_format($recargos, 2) }}</td>
+                </tr>
+                <tr>
+                <td>Total</td>
+                <td>${{ number_format($total, 2) }}</td>
+                </tr>
             </tbody>
-
         </table>
-        <br>
-        <br>
 
-        <p class="separador"><strong>INFORMACIÓN DE LA TESORERÍA MUNICIPAL O DE LA OFICINA RECAUDADORA</strong></p>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
+        <p style="text-align: center;">({{ $total_letra }} pesos 0/100 m.n)</p>
 
-        <p class="separador"><strong>SELLO</strong></p>
+        <p style="text-transform: uppercase; border-bottom: gray solid 1px; text-align: center; display: inline"></p>
+        <p style="text-align: center;" >Sello</p>
+
+        <p>Lo atendió: {{ $pago->creadoPor->name }}</p>
+        <p>Nombre fiscal: {{ $oficina->nombre }}</p>
+        <p>R.F.C.: {{ $oficina->nombre }}</p>
+        <p>Domicilio fiscal: {{ $oficina->ubicacion }}</p>
+
+        <p>Nota</p>
+        <p>la determinación de los valores y procedimientos aritméticos que se realizaron para llegar a la conclusión del valor catastral del predio en referencia, se encuentran incluidos en el artículo 21 de la ley de hacienda municipal del estado de michoacán de ocampo</p>
 
     </main>
 

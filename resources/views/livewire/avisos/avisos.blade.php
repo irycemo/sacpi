@@ -50,7 +50,7 @@
 
                             <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Folio</span>
 
-                            <span class="whitespace-nowrap">{{ $aviso['folio'] }}</span>
+                            <span class="whitespace-nowrap">{{ $aviso['año'] }}-{{ $aviso['folio'] }}-{{ $aviso['usuario'] }}</span>
 
                         </x-table.cell>
 
@@ -58,7 +58,7 @@
 
                             <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Cuenta predial</span>
 
-                            <span class="whitespace-nowrap">{{ $aviso['cuenta_predial'] }}</span>
+                            <span class="whitespace-nowrap">{{ $aviso['localidad'] }}-{{ $aviso['oficina'] }}-{{ $aviso['tipo_predio'] }}-{{ $aviso['numero_registro'] }}</span>
 
                         </x-table.cell>
 
@@ -66,7 +66,7 @@
 
                             <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Notaria</span>
 
-                            <span >{{ $aviso['notaria'] }}</span>
+                            <span >{{ $aviso['notaria_numero'] }}</span>
 
                         </x-table.cell>
 
@@ -215,19 +215,19 @@
 
                     <x-input-group for="fecha_reduccion" label="Fecha de reducción" :error="$errors->first('fecha_reduccion')" class="w-full">
 
-                        <x-input-text id="fecha_reduccion" value="{{ $aviso_seleccionado['fecha_reduccion'] }}" readonly/>
+                        <x-input-text id="fecha_reduccion" value="{{ \Carbon\Carbon::parse($aviso_seleccionado['fecha_reduccion'])->format('d/m/Y') }}" readonly/>
 
                     </x-input-group>
 
                     <x-input-group for="fecha_limite_pago" label="Fecha límite de pago" :error="$errors->first('fecha_limite_pago')" class="w-full">
 
-                        <x-input-text id="fecha_limite_pago" value="{{ $fecha_limite_pago }}" readonly/>
+                        <x-input-text id="fecha_limite_pago" value="{{ \Carbon\Carbon::parse($fecha_limite_pago)->format('d/m/Y') }}" readonly/>
 
                     </x-input-group>
 
                     <x-input-group for="fecha_presentacion" label="Fecha de presentación" :error="$errors->first('fecha_presentacion')" class="w-full">
 
-                        <x-input-text id="fecha_presentacion" value="{{ $fecha_presentacion }}" readonly/>
+                        <x-input-text id="fecha_presentacion" value="{{ \Carbon\Carbon::parse($fecha_presentacion)->format('d/m/Y') }}" readonly/>
 
                     </x-input-group>
 
@@ -237,25 +237,25 @@
 
                     <x-input-group for="isai" label="ISAI" :error="$errors->first('isai')" class="w-full">
 
-                        <x-input-text id="isai" value="{{ $aviso_seleccionado['isai'] }}" readonly/>
+                        <x-input-text id="isai" value="${{ number_format($aviso_seleccionado['isai'], 2) }}" readonly/>
 
                     </x-input-group>
 
                     <x-input-group for="multas" label="Multas" :error="$errors->first('multas')" class="w-full">
 
-                        <x-input-text id="multas" value="{{ $multas }}" readonly/>
+                        <x-input-text id="multas" value="${{ number_format($multas, 2) }}" readonly/>
 
                     </x-input-group>
 
                     <x-input-group for="actualizacion" label="Actualización" :error="$errors->first('actualizacion')" class="w-full">
 
-                        <x-input-text id="actualizacion" value="{{ $actualizacion }}" readonly/>
+                        <x-input-text id="actualizacion" value="${{ number_format($actualizacion, 2) }}" readonly/>
 
                     </x-input-group>
 
                     <x-input-group for="recargos" label="Recargos" :error="$errors->first('recargos')" class="w-full">
 
-                        <x-input-text id="recargos" value="{{ $recargos }}" readonly/>
+                        <x-input-text id="recargos" value="${{ number_format($recargos, 2) }}" readonly/>
 
                     </x-input-group>
 
@@ -277,7 +277,7 @@
 
                     <x-input-group for="total" label="Total" :error="$errors->first('total')" class="w-full">
 
-                        <x-input-text id="total" value="{{ $total }}" readonly/>
+                        <x-input-text id="total" value="${{ number_format($total, 2) }}" readonly/>
 
                     </x-input-group>
 

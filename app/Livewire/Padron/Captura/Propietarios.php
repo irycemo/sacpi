@@ -295,7 +295,6 @@ class Propietarios extends Component
 
                 $this->predio->propietarios()->create([
                     'persona_id' => $persona->id,
-                    'tipo' => 'PROPIETARIO',
                     'porcentaje_propiedad' => $this->porcentaje,
                     'porcentaje_nuda' => $this->porcentaje_nuda,
                     'porcentaje_usufructo' => $this->porcentaje_usufructo,
@@ -454,7 +453,6 @@ class Propietarios extends Component
 
                 $this->propietario->update([
                     'persona_id' => $persona->id,
-                    'tipo' => $this->tipo_propietario,
                     'porcentaje_proopiedad' => $this->porcentaje,
                     'porcentaje_nuda' => $this->porcentaje_nuda,
                     'porcentaje_usufructo' => $this->porcentaje_usufructo,
