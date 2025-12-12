@@ -2,8 +2,9 @@
 
 namespace App\Livewire\Parametros;
 
-use App\Models\Parametro;
 use Livewire\Component;
+use App\Models\Parametro;
+use Illuminate\Support\Facades\Log;
 
 class Valores extends Component
 {
@@ -20,9 +21,6 @@ class Valores extends Component
             'parametro.cuota_minima_predial_rusticos' => 'required|numeric',
             'parametro.cuota_minima_ejidal_urbanos' => 'required|numeric',
             'parametro.cuota_minima_ejidal_rusticos' => 'required|numeric',
-            'parametro.folio_contancias' => 'required|numeric',
-            'parametro.folio_requerimientos' => 'required|numeric',
-            'parametro.folio_constancias' => 'required|numeric',
             'parametro.tasa_urbanos_1980' => 'required|numeric',
             'parametro.tasa_urbanos_81a83' => 'required|numeric',
             'parametro.tasa_urbanos_84y85' => 'required|numeric',
@@ -65,8 +63,11 @@ class Valores extends Component
 
             $this->parametro->save();
 
+            $this->dispatch('mostrarMensaje', ['success', "La información de actualizó con éxito."]);
+
         } catch (\Throwable $th) {
-            //throw $th;
+            Log::error("Error al actualizar parametros por el usuario: (id: " . auth()->user()->id . ") " . auth()->user()->name . ". " . $th);
+            $this->dispatch('mostrarMensaje', ['error', "Hubo un error."]);
         }
 
     }
@@ -74,7 +75,7 @@ class Valores extends Component
     public function mount(){
 
         $parametro = Parametro::where('oficina_id', auth()->user()->oficina_id)
-                                        ->where('ejercicio_fiscal', 2026)
+                                        ->where('ejercicio_fiscal', now()->format('Y'))
                                         ->first();
 
         if(!$parametro){

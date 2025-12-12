@@ -35,4 +35,14 @@ return [
         ],
     ],
 
+    'sistema_tramites_en_linea' => [
+        'token' => env('SISTEMA_TRAMITES_EN_LINEA_TOKEN'),
+        'consultar_avisos' => env('SISTEMA_TRAMITES_EN_LINEA_CONSULTAR_AVISOS'),
+    ],
+
+    'sgc' => [
+        'token' => env('SGC_TOKEN'),
+        'registrar_pago_isai' => env('SGC_REGISTRAR_PAGO_ISAI'),
+    ],
+
 ];

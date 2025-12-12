@@ -19,6 +19,7 @@ class Constantes{
     ];
 
     const AÑOS = [
+        '2025',
         '2024',
         '2023',
     ];

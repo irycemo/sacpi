@@ -4,22 +4,46 @@
 
         <x-header>Avisos autorizados</x-header>
 
-        <div class="flex justify-between items-center ">
+        <div class="flex gap-4 items-center ">
 
-            <div class="space-y-2">
+            <div class="flex gap-1">
 
-                <input type="text" wire:model.live.debounce.500ms="search" placeholder="Buscar" class="bg-white rounded-full text-sm ">
+                <select class="bg-white rounded-full text-sm" wire:model.live="año">
 
-                <select class="bg-white rounded-full text-sm" wire:model.live="pagination">
+                    @foreach ($años as $año)
 
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
+                        <option value="{{ $año }}">{{ $año }}</option>
+
+                    @endforeach
 
                 </select>
 
+                <input type="number" wire:model.live.debounce.500mse="folio" placeholder="Folio" class="bg-white rounded-full text-sm w-24">
+
+                <input type="number" wire:model.live.debounce.500mse="usuario" placeholder="Usuario" class="bg-white rounded-full text-sm w-24">
+
             </div>
+
+            <div class="flex gap-1">
+
+                <input type="number" wire:model.live.debounce.500ms="localidad" placeholder="Localidad" class="bg-white rounded-full text-sm w-24">
+
+                <input type="number" wire:model.live.debounce.500ms="oficina" placeholder="Oficina" class="bg-white rounded-full text-sm w-24">
+
+                <input type="number" wire:model.live.debounce.500ms="tipo_predio" placeholder="T. Predio" class="bg-white rounded-full text-sm w-24">
+
+                <input type="number" wire:model.live.debounce.500ms="numero_registro" placeholder="# Registro" class="bg-white rounded-full text-sm w-24">
+
+            </div>
+
+            <select class="bg-white rounded-full text-sm" wire:model.live="pagination">
+
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+
+            </select>
 
         </div>
 

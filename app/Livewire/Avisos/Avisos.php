@@ -2,16 +2,20 @@
 
 namespace App\Livewire\Avisos;
 
-use App\Models\Pagosisai;
-use App\Models\Predio;
-use Livewire\Component;
-use Livewire\WithPagination;
-use Illuminate\Support\Facades\Log;
+use App\Constantes\Constantes;
 use Carbon\Carbon;
 use App\Models\Uma;
-use App\Traits\IncpTrait;
-use Barryvdh\DomPDF\Facade\Pdf;
 use NumberFormatter;
+use App\Models\Predio;
+use Livewire\Component;
+use App\Models\Pagosisai;
+use App\Traits\IncpTrait;
+use Illuminate\Support\Arr;
+use Livewire\WithPagination;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Log;
+use App\Exceptions\GeneralException;
+use App\Services\SistemaTramitesEnLineaService\SistemaTramitesEnLineaService;
 
 
 class Avisos extends Component
@@ -27,6 +31,14 @@ class Avisos extends Component
     public $sin_multa = false;
     public $sin_recargo = false;
 
+    public $años;
+    public $año;
+    public $folio;
+    public $estado;
+    public $localidad;
+    public $oficina;
+    public $tipo_predio;
+    public $numero_registro;
     public $paginaActual = 1;
     public $paginaAnterior;
     public $paginaSiguiente;
@@ -46,6 +58,12 @@ class Avisos extends Component
     public function nextPage(){ (int)$this->paginaActual++; $this->dispatch('gotoTop'); }
 
     public function previousPage(){ (int)$this->paginaActual--; $this->dispatch('gotoTop'); }
+
+    public function updated($field, $value){
+
+        if($value == '') $this->{$field} = null;
+
+    }
 
     public function updatedSinMulta(){
 
@@ -198,6 +216,10 @@ class Avisos extends Component
 
     public function mount(){
 
+        $this->años = Constantes::AÑOS;
+
+        $this->año = now()->year;
+
         $this->tasa_recargos_isai = auth()->user()->oficina->parametros->where('ejercicio_fiscal', now()->year)->first()->tasa_recargos_isai;
 
     }
@@ -205,30 +227,39 @@ class Avisos extends Component
     public function render()
     {
 
-        $json = '[
-            {"año":"2025","folio":"10","usuario":"34","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266208","notaria_numero":"12","fecha_reduccion":"2024-08-15","isai":15000},
-            {"año":"2025","folio":"152","usuario":"94","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266209","notaria_numero":"4","fecha_reduccion":"2025-08-16","isai":20000},
-            {"año":"2025","folio":"254","usuario":"121","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266210","notaria_numero":"7","fecha_reduccion":"2025-08-17","isai":18000},
-            {"año":"2025","folio":"18","usuario":"5","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266208","notaria_numero":"22","fecha_reduccion":"2025-08-18","isai":0},
-            {"año":"2025","folio":"100","usuario":"134","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266208","notaria_numero":"10","fecha_reduccion":"2025-08-19","isai":22000},
-            {"año":"2025","folio":"254","usuario":"14","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266208","notaria_numero":"5","fecha_reduccion":"2025-08-20","isai":17500},
-            {"año":"2025","folio":"123","usuario":"25","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266208","notaria_numero":"18","fecha_reduccion":"2025-08-21","isai":19500},
-            {"año":"2025","folio":"478","usuario":"18","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266208","notaria_numero":"30","fecha_reduccion":"2025-08-22","isai":21000},
-            {"año":"2025","folio":"21","usuario":"201","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266208","notaria_numero":"2","fecha_reduccion":"2025-08-23","isai":16000},
-            {"año":"2025","folio":"1","usuario":"54","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266208","notaria_numero":"15","fecha_reduccion":"2025-08-24","isai":25000},
-            {"año":"2025","folio":"10","usuario":"34","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266208","notaria_numero":"12","fecha_reduccion":"2024-08-15","isai":15000},
-            {"año":"2025","folio":"152","usuario":"94","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266209","notaria_numero":"4","fecha_reduccion":"2025-08-16","isai":20000},
-            {"año":"2025","folio":"254","usuario":"121","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266210","notaria_numero":"7","fecha_reduccion":"2025-08-17","isai":18000},
-            {"año":"2025","folio":"18","usuario":"5","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266208","notaria_numero":"22","fecha_reduccion":"2025-08-18","isai":0},
-            {"año":"2025","folio":"100","usuario":"134","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266208","notaria_numero":"10","fecha_reduccion":"2025-08-19","isai":22000},
-            {"año":"2025","folio":"254","usuario":"14","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266208","notaria_numero":"5","fecha_reduccion":"2025-08-20","isai":17500},
-            {"año":"2025","folio":"123","usuario":"25","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266208","notaria_numero":"18","fecha_reduccion":"2025-08-21","isai":19500},
-            {"año":"2025","folio":"478","usuario":"18","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266208","notaria_numero":"30","fecha_reduccion":"2025-08-22","isai":21000},
-            {"año":"2025","folio":"21","usuario":"201","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266208","notaria_numero":"2","fecha_reduccion":"2025-08-23","isai":16000},
-            {"año":"2025","folio":"1","usuario":"54","estatus":"AUTORIZADO","localidad":"1","oficina":"101","tipo_predio":"1","numero_registro":"266208","notaria_numero":"15","fecha_reduccion":"2025-08-24","isai":25000}
-        ]';
+        $avisos = [];
 
-        $avisos = json_decode($json, true);
+        try {
+
+            $data = (new SistemaTramitesEnLineaService())->consultarAvisos(
+                                                                 $this->año,
+                                                                 $this->folio,
+                                                                 $this->estado,
+                                                                 $this->localidad,
+                                                                 $this->oficina,
+                                                                 $this->tipo_predio,
+                                                                 $this->numero_registro,
+                                                                 $this->paginaActual,
+                                                                 $this->pagination
+                                                                );
+
+            $this->paginaActual = Arr::get($data, 'meta.current_page');
+            $this->paginaAnterior = Arr::get($data, 'links.prev');
+            $this->paginaSiguiente = Arr::get($data, 'links.next');
+
+            $avisos = collect($data['data']);
+
+        } catch (GeneralException $ex) {
+
+            abort(403, message:$ex->getMessage());
+
+        } catch (\Throwable $th) {
+
+            Log::error("Error al consultar consultar certificados es SGC. " . $th);
+
+            abort(403, message:"Error al consultar certificados");
+
+        }
 
         return view('livewire.avisos.avisos', compact('avisos'))->extends('layouts.admin');
 
