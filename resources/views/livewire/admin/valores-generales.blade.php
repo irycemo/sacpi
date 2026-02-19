@@ -1,6 +1,6 @@
 <div class="">
 
-    <div class="mb-6">
+    <div class="mb-5">
 
         <x-header>Valores generales</x-header>
 
@@ -55,34 +55,25 @@
 
                     <x-table.row wire:loading.class.delaylongest="opacity-50" wire:key="row-{{ $valor->id }}">
 
-                        <x-table.cell>
-
-                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 text-[10px] text-white font-bold uppercase rounded-br-xl">Ejercicio fiscal</span>
+                        <x-table.cell title="Ejercicio fiscal">
 
                             {{ $valor->ejercicio_fiscal }}
 
                         </x-table.cell>
 
-                        <x-table.cell>
-
-                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 text-[10px] text-white font-bold uppercase rounded-br-xl">Minimo urbano</span>
+                        <x-table.cell  title="Minimo urbano">
 
                             ${{ number_format($valor->valor_catastral_minimo_urbanos, 2) }}
 
                         </x-table.cell>
 
-                        <x-table.cell>
-
-                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 text-[10px] text-white font-bold uppercase rounded-br-xl">Minimo rustico</span>
+                        <x-table.cell title="Minimo rustico">
 
                             ${{ number_format($valor->valor_catastral_minimo_rusticos, 2) }}
 
                         </x-table.cell>
 
-                        <x-table.cell>
-
-                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 text-[10px] text-white font-bold uppercase rounded-br-xl">Registrado</span>
-
+                        <x-table.cell title="Registrado">
 
                             <span class="font-semibold">@if($valor->creadoPor != null)Registrado por: {{$valor->creadoPor->name}} @else Registro: @endif</span> <br>
 
@@ -90,17 +81,13 @@
 
                         </x-table.cell>
 
-                        <x-table.cell>
-
-                            <span class="font-semibold">@if($valor->actualizadoPor != null)Actualizado por: {{$valor->actualizadoPor->name}} @else Actualizado: @endif</span> <br>
+                        <x-table.cell title="Actualizado">
 
                             {{ $valor->updated_at }}
 
                         </x-table.cell>
 
-                        <x-table.cell>
-
-                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 text-[10px] text-white font-bold uppercase rounded-br-xl">Acciones</span>
+                        <x-table.cell title="Acciones">
 
                             <div class="ml-3 relative" x-data="{ open_drop_down:false }">
 

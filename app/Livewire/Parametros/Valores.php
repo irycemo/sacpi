@@ -61,6 +61,8 @@ class Valores extends Component
 
         try {
 
+            $this->parametro->ejercicio_fiscal = now()->year;
+            $this->parametro->oficina_id = auth()->user()->oficina_id;
             $this->parametro->save();
 
             $this->dispatch('mostrarMensaje', ['success', "La información de actualizó con éxito."]);

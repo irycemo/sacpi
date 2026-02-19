@@ -305,49 +305,37 @@
 
                             <x-table.row wire:loading.class.delaylongest="opacity-50" wire:key="row-{{ $item->id }}">
 
-                                <x-table.cell>
-
-                                    <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 text-[10px] text-white font-bold uppercase rounded-br-xl">Cuenta predial</span>
+                                <x-table.cell title="Cuenta predial">
 
                                     <span class="whitespace-nowrap">{{ $item->cuentaPredial() }}</span>
 
                                 </x-table.cell>
 
-                                <x-table.cell>
+                                <x-table.cell title="Clave catastral">
 
-                                    <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 text-[10px] text-white font-bold uppercase rounded-br-xl">Clave catastral</span>
-
-                                    <p class="mt-2"><span class="whitespace-nowrap">{{ $item->claveCatastral() }}</span></p>
+                                    <span class="whitespace-nowrap">{{ $item->claveCatastral() }}</span>
 
                                 </x-table.cell>
 
-                                <x-table.cell>
+                                <x-table.cell title="Propietario">
 
-                                    <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 text-[10px] text-white font-bold uppercase rounded-br-xl">Propietario</span>
-
-                                    <p class="mt-2">{{ $item->primerPropietario() }}</p>
+                                    {{ $item->primerPropietario() }}
 
                                 </x-table.cell>
 
-                                <x-table.cell>
+                                <x-table.cell title="Asentamiento">
 
-                                    <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 text-[10px] text-white font-bold uppercase rounded-br-xl">Asentamiento</span>
-
-                                    <p class="mt-2">{{ $item->tipo_asentamiento . ', ' . $item->nombre_asentamiento }}</p>
+                                    {{ $item->tipo_asentamiento . ', ' . $item->nombre_asentamiento }}
 
                                 </x-table.cell>
 
-                                <x-table.cell>
+                                <x-table.cell title="Vialidad">
 
-                                    <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 text-[10px] text-white font-bold uppercase rounded-br-xl">Vialidad</span>
-
-                                    <p class="mt-2">{{ $item->tipo_vialidad . ', ' . $item->nombre_vialidad }}</p>
+                                    {{ $item->tipo_vialidad . ', ' . $item->nombre_vialidad }}
 
                                 </x-table.cell>
 
-                                <x-table.cell>
-
-                                    <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 text-[10px] text-white font-bold uppercase rounded-br-xl"># Exterior / # Interior</span>
+                                <x-table.cell title="# Exterior / # Interior">
 
                                     {{ $item->numero_exterior . ', ' , $item->numero_interior }}
 

@@ -23,6 +23,8 @@ class Umas extends Component
             'modelo_editar.diario' => 'required|numeric',
             'modelo_editar.mensual' => 'required|numeric',
             'modelo_editar.anual' => 'required|numeric',
+            'modelo_editar.minimo_rustico' => 'required|numeric',
+            'modelo_editar.minimo_urbano' => 'required|numeric',
          ];
     }
 

@@ -6,7 +6,7 @@
 
             <span class="flex items-center justify-center text-lg text-gray-700 mb-5">Propietarios</span>
 
-            <div class="flex justify-between mb-2">
+            <div class="flex justify-between mb-2 gap-2">
 
                 <x-button-red
                         wire:click="$toggle('modalBorrar')"

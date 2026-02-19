@@ -1,6 +1,6 @@
 <div class="">
 
-    <div class="mb-6">
+    <div class="mb-5">
 
         <x-header>Factor de incremento</x-header>
 
@@ -58,26 +58,19 @@
 
                     <x-table.row wire:loading.class.delaylongest="opacity-50" wire:key="row-{{ $factor->id }}">
 
-                        <x-table.cell>
-
-                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 text-[10px] text-white font-bold uppercase rounded-br-xl">Factor</span>
+                        <x-table.cell title="Factor">
 
                             {{ $factor->factor }}
 
                         </x-table.cell>
 
-                        <x-table.cell>
-
-                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 text-[10px] text-white font-bold uppercase rounded-br-xl">Año</span>
+                        <x-table.cell  title="Año">
 
                             {{ $factor->año }}
 
                         </x-table.cell>
 
-                        <x-table.cell>
-
-                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 text-[10px] text-white font-bold uppercase rounded-br-xl">Registrado</span>
-
+                        <x-table.cell title="Registrado">
 
                             <span class="font-semibold">@if($factor->creadoPor != null)Registrado por: {{$factor->creadoPor->name}} @else Registro: @endif</span> <br>
 
@@ -85,7 +78,7 @@
 
                         </x-table.cell>
 
-                        <x-table.cell>
+                        <x-table.cell title="Actualizado">
 
                             <span class="font-semibold">@if($factor->actualizadoPor != null)Actualizado por: {{$factor->actualizadoPor->name}} @else Actualizado: @endif</span> <br>
 
@@ -93,9 +86,7 @@
 
                         </x-table.cell>
 
-                        <x-table.cell>
-
-                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 text-[10px] text-white font-bold uppercase rounded-br-xl">Acciones</span>
+                        <x-table.cell title="Acciones">
 
                             <div class="ml-3 relative" x-data="{ open_drop_down:false }">
 

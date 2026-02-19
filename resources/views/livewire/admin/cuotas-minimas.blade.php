@@ -1,6 +1,6 @@
 <div class="">
 
-    <div class="mb-6">
+    <div class="mb-5">
 
         <x-header>Cuotas minimas</x-header>
 
@@ -55,47 +55,37 @@
 
                     <x-table.row wire:loading.class.delaylongest="opacity-50" wire:key="row-{{ $couta->id }}">
 
-                        <x-table.cell>
-
-                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 text-[10px] text-white font-bold uppercase rounded-br-xl">Municipio</span>
+                        <x-table.cell title="Municipio">
 
                             {{ $couta->municipio }}
 
                         </x-table.cell>
 
-                        <x-table.cell>
-
-                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 text-[10px] text-white font-bold uppercase rounded-br-xl">Fecha inicial</span>
+                        <x-table.cell title="Fecha inicial">
 
                             {{ $couta->fecha_inicial }}
 
                         </x-table.cell>
 
-                        <x-table.cell>
-
-                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 text-[10px] text-white font-bold uppercase rounded-br-xl">Fecha final</span>
+                        <x-table.cell title="Fecha final">
 
                             {{ $couta->fecha_final }}
 
                         </x-table.cell>
 
-                        <x-table.cell>
-
-                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 text-[10px] text-white font-bold uppercase rounded-br-xl">Registrado</span>
+                        <x-table.cell title="Registrado">
 
                             {{ $couta->created_at }}
 
                         </x-table.cell>
 
-                        <x-table.cell>
+                        <x-table.cell title="Actualziado">
 
                             {{ $couta->updated_at }}
 
                         </x-table.cell>
 
-                        <x-table.cell>
-
-                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 text-[10px] text-white font-bold uppercase rounded-br-xl">Acciones</span>
+                        <x-table.cell title="Acciones">
 
                             <div class="ml-3 relative" x-data="{ open_drop_down:false }">
 

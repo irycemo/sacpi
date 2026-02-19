@@ -49,7 +49,7 @@
 
             <div class="col-span-1 lg:col-span-9">
 
-                <div class="space-y-2 mb-5 p-2">
+                <div class="space-y-2 p-2">
 
                     <x-h4>Cuenta corriente</x-h4>
 
@@ -73,36 +73,28 @@
                                 @forelse ($cuenta_corriente as $cuenta)
 
                                     <x-table.row wire:loading.class.delaylongest="opacity-50" wire:key="row-{{ $loop->iteration }}">
-                                        <x-table.cell>
-                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Ejercicio fiscal</span>
+                                        <x-table.cell title="Ejercicio fiscal">
                                             <span class="whitespace-nowrap">{{ $cuenta['ejercicio_fiscal'] }}</span>
                                         </x-table.cell>
-                                        <x-table.cell>
-                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Bimestre</span>
+                                        <x-table.cell title="Bimestre">
                                             <span class="whitespace-nowrap">{{ $cuenta['bimestre'] }}</span>
                                         </x-table.cell>
-                                        <x-table.cell>
-                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Monto</span>
+                                        <x-table.cell title="Monto">
                                             <span class="whitespace-nowrap">${{ number_format($cuenta['impuesto'], 2) }}</span>
                                         </x-table.cell>
-                                        <x-table.cell>
-                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Actualización</span>
+                                        <x-table.cell title="Actualización">
                                             <span class="whitespace-nowrap">${{ number_format($cuenta['actualizacion'], 2) }}</span>
                                         </x-table.cell>
-                                        <x-table.cell>
-                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Recargos</span>
+                                        <x-table.cell title="Recargos">
                                             <span class="whitespace-nowrap">${{ number_format($cuenta['recargos'], 2) }}</span>
                                         </x-table.cell>
-                                        <x-table.cell>
-                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Multas</span>
+                                        <x-table.cell title="Multas">
                                             <span class="whitespace-nowrap">${{ number_format($cuenta['multas'], 2) }}</span>
                                         </x-table.cell>
-                                        <x-table.cell>
-                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Requerimientos</span>
+                                        <x-table.cell title="Requerimientos">
                                             <span class="whitespace-nowrap">${{ number_format($cuenta['requerimientos'], 2) }}</span>
                                         </x-table.cell>
-                                        <x-table.cell>
-                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Subtotal</span>
+                                        <x-table.cell title="Subtotal">
                                             <span class="whitespace-nowrap">${{ number_format($cuenta['subtotal'], 2) }}</span>
                                         </x-table.cell>
                                     </x-table.row>
@@ -132,9 +124,6 @@
                             </x-slot>
 
                             <x-slot name="tfoot">
-                                <x-table.row>
-
-                                </x-table.row>
                             </x-slot>
 
                         </x-table>
@@ -143,7 +132,7 @@
 
                 </div>
 
-                <div class="space-y-2 mb-5 rounded-lg p-2">
+                <div class="space-y-2 rounded-lg p-2">
 
                     <x-h4>Rezagos</x-h4>
 
@@ -166,32 +155,25 @@
                                 @forelse ($rezagos as $rezago)
 
                                     <x-table.row wire:loading.class.delaylongest="opacity-50" wire:key="row-{{ $loop->iteration }}">
-                                        <x-table.cell>
-                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Ejercicio fiscal</span>
+                                        <x-table.cell title="Ejercicio fiscal">
                                             <span class="whitespace-nowrap">{{ $rezago['ejercicio_fiscal'] }}</span>
                                         </x-table.cell>
-                                        <x-table.cell>
-                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Monto</span>
+                                        <x-table.cell title="Monto">
                                             <span class="whitespace-nowrap">${{ number_format($rezago['impuesto'], 2) }}</span>
                                         </x-table.cell>
-                                        <x-table.cell>
-                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Actualización</span>
+                                        <x-table.cell title="Actualización">
                                             <span class="whitespace-nowrap">${{ number_format($rezago['actualizacion'], 2) }}</span>
                                         </x-table.cell>
-                                        <x-table.cell>
-                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Recargos</span>
+                                        <x-table.cell title="Recargos">
                                             <span class="whitespace-nowrap">${{ number_format($rezago['recargos'], 2) }}</span>
                                         </x-table.cell>
-                                        <x-table.cell>
-                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Multas</span>
+                                        <x-table.cell title="Multas">
                                             <span class="whitespace-nowrap">${{ number_format($rezago['multas'], 2) }}</span>
                                         </x-table.cell>
-                                        <x-table.cell>
-                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Requerimientos</span>
+                                        <x-table.cell title="Requerimientos">
                                             <span class="whitespace-nowrap">${{ number_format($rezago['requerimientos'], 2) }}</span>
                                         </x-table.cell>
-                                        <x-table.cell>
-                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Subtotal</span>
+                                        <x-table.cell title="Subtotal">
                                             <span class="whitespace-nowrap">${{ number_format($rezago['subtotal'], 2) }}</span>
                                         </x-table.cell>
                                     </x-table.row>
@@ -217,9 +199,6 @@
                             </x-slot>
 
                             <x-slot name="tfoot">
-                                <x-table.row>
-
-                                </x-table.row>
                             </x-slot>
 
                         </x-table>

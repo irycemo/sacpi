@@ -104,13 +104,11 @@ class Isai extends Component
 
     }
 
-
     public function calcularIsai(){
 
         $this->validate();
 
         $this->fecha_reduccion_carbon = Carbon::parse($this->fecha_reduccion);
-
 
         if($this->fecha_reduccion_carbon->format('Y') >= 2023){
 
@@ -128,10 +126,10 @@ class Isai extends Component
 
         }
 
-         $this->cuota_minima = CuotaMinima::where('municipio', auth()->user()->oficina->municipio)
-                                             ->where('fecha_inicial', '<=', $this->fecha_reduccion_carbon)
-                                             ->where('fecha_final', '>=', $this->fecha_reduccion_carbon)
-                                             ->first();
+        $this->cuota_minima = CuotaMinima::where('municipio', auth()->user()->oficina->municipio)
+                                            ->where('fecha_inicial', '<=', $this->fecha_reduccion_carbon)
+                                            ->where('fecha_final', '>=', $this->fecha_reduccion_carbon)
+                                            ->first();
 
 
         if(!$this->cuota_minima){

@@ -1,37 +1,33 @@
 <div class="">
 
-    <div class="mb-6">
+    <div class="mb-2 lg:mb-5">
 
         <x-header>Usuarios</x-header>
 
-        <div class="flex justify-between items-center ">
+        <div class="flex gap-3 overflow-auto p-1">
 
-            <div class="space-y-2">
+            <input type="text" wire:model.live.debounce.500ms="search" placeholder="Buscar" class="bg-white rounded-full text-sm ">
 
-                <input type="text" wire:model.live.debounce.500ms="search" placeholder="Buscar" class="bg-white rounded-full text-sm ">
+            <select class="bg-white rounded-full text-sm" wire:model.live="filters.rol">
 
-                <select class="bg-white rounded-full text-sm" wire:model.live="filters.rol">
+                <option value="">Seleccione un rol</option>
 
-                    <option value="">Seleccione un rol</option>
+                @foreach ($roles as $rol)
 
-                    @foreach ($roles as $rol)
+                    <option value="{{ $rol->name }}">{{ $rol->name }}</option>
 
-                        <option value="{{ $rol->name }}">{{ $rol->name }}</option>
+                @endforeach
 
-                    @endforeach
+            </select>
 
-                </select>
+            <select class="bg-white rounded-full text-sm" wire:model.live="pagination">
 
-                <select class="bg-white rounded-full text-sm" wire:model.live="pagination">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
 
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-
-                </select>
-
-            </div>
+            </select>
 
             @can('Crear usuario')
 
@@ -76,9 +72,7 @@
 
                     <x-table.row wire:loading.class.delaylongest="opacity-50" wire:key="row-{{ $usuario->id }}">
 
-                        <x-table.cell>
-
-                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Status</span>
+                        <x-table.cell title="Estado">
 
                             @if($usuario->status == 'activo')
 
@@ -92,9 +86,7 @@
 
                         </x-table.cell>
 
-                        <x-table.cell>
-
-                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Nombre</span>
+                        <x-table.cell title="Nombre">
 
                             <div class="flex items-center justify-center lg:justify-start">
 
@@ -106,17 +98,13 @@
 
                         </x-table.cell>
 
-                        <x-table.cell>
-
-                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Email</span>
+                        <x-table.cell title="Email">
 
                             {{ $usuario->email }}
 
                         </x-table.cell>
 
-                        <x-table.cell>
-
-                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Role</span>
+                        <x-table.cell title="Role">
 
                             @if ($usuario->roles()->count())
 
@@ -126,10 +114,7 @@
 
                         </x-table.cell>
 
-                        <x-table.cell>
-
-                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Registrado</span>
-
+                        <x-table.cell title="Registrado">
 
                             <span class="font-semibold">@if($usuario->creadoPor != null)Registrado por: {{$usuario->creadoPor->name}} @else Registro: @endif</span> <br>
 
@@ -137,7 +122,7 @@
 
                         </x-table.cell>
 
-                        <x-table.cell>
+                        <x-table.cell title="Actualizado">
 
                             <span class="font-semibold">@if($usuario->actualizadoPor != null)Actualizado por: {{$usuario->actualizadoPor->name}} @else Actualizado: @endif</span> <br>
 
@@ -145,9 +130,7 @@
 
                         </x-table.cell>
 
-                        <x-table.cell>
-
-                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Acciones</span>
+                        <x-table.cell title="Acciones">
 
                             <div class="ml-3 relative" x-data="{ open_drop_down:false }">
 

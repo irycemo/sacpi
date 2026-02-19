@@ -4,24 +4,11 @@
 
         <div class="w-full lg:w-1/4 mx-auto space-y-3">
 
-            {{-- <div class="w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+            <x-input-group for="valor_adquisicion" label="Valor de adquisición" :error="$errors->first('valor_adquisicion')" class="w-full">
 
-                <div class="flex items-center ps-3">
-                    <input type="checkbox" wire:model="no_genera_isai" name="sin reducción" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                    <label for="sin reducción" class="w-full p-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">No genera ISAI (fusiones, cuando las fracciones estan registradas al mismo propietario, divisiones, particiones y cuando no haya exedencia)</label>
-                </div>
+                <x-input-text type="number" id="valor_adquisicion" wire:model="valor_adquisicion" />
 
-            </div> --}}
-
-            {{--<x-input-group for="valor_adquisicion" label="Valor de adquisición" class="w-full">--}}
-
-                <div style="flex: 1; padding: 10px; ">
-                    <x-label for="valor_adquisicion" value="{{ __('Valor de adquisición') }}" />
-                    <x-input type="number" id="valor_adquisicion" wire:model.live="valor_adquisicion" />
-                    <x-input-error for="valor_adquisicion" class="mt-2" />
-                </div>
-
-            {{--/x-input-group>--}}
+            </x-input-group>
 
             <div>
 
@@ -51,58 +38,51 @@
 
             </div>
 
+            <x-input-group for="fecha_reduccion" label="Fecha de reducción" :error="$errors->first('fecha_reduccion')" class="w-full">
 
-            <div style="flex: 1; padding: 10px;" class="grid md:grid-cols-1 gap-2">
-                <div>
-                    <x-label for="fecha_reduccion" value="{{ __('Fecha de reducción') }}" />
-                    <x-input type="date" id="fecha_reduccion" wire:model.live="fecha_reduccion" wire:blur="calcular_fechas" />
-                    <x-input-error for="fecha_reduccion" class="mt-2" />
-                </div>
-                <div>
-                    <x-label for="fecha_limite_pago" value="{{ __('Fecha límite de pago') }}" />
-                    <x-input type="date" id="fecha_limite_pago" wire:model.live="fecha_limite_pago" />
-                    <x-input-error for="fecha_limite_pago" class="mt-2" />
-                </div>
-                <div>
-                    <x-label for="fecha_presentacion" value="{{ __('Fecha de presentación') }}" />
-                    <x-input type="date" id="fecha_presentacion" wire:model.live="fecha_presentacion" />
-                    <x-input-error for="fecha_presentacion" class="mt-2" />
-                </div>
-            </div>
+                <x-input-text type="number" id="fecha_reduccion" wire:model="fecha_reduccion" />
 
+            </x-input-group>
 
-            <div style="flex: 1; padding: 10px; ">
-                <x-label for="valor_catastral" value="{{ __('Valor Catastral o Valor del avalúo') }}" />
-                <x-input type="number" id="valor_catastral" wire:model.live="valor_catastral" />
-                <x-input-error for="valor_catastral" class="mt-2" />
-            </div>
+            <x-input-group for="fecha_limite_pago" label="Fecha límite de pago" :error="$errors->first('fecha_limite_pago')" class="w-full">
 
+                <x-input-text type="number" id="fecha_limite_pago" wire:model="fecha_limite_pago" />
 
+            </x-input-group>
+
+            <x-input-group for="fecha_presentacion" label="Fecha de presentación" :error="$errors->first('fecha_presentacion')" class="w-full">
+
+                <x-input-text type="number" id="fecha_presentacion" wire:model="fecha_presentacion" />
+
+            </x-input-group>
+
+            <x-input-group for="valor_catastral" label="Valor Catastral o Valor del avalúo" :error="$errors->first('valor_catastral')" class="w-full">
+
+                <x-input-text type="number" id="valor_catastral" wire:model="valor_catastral" />
+
+            </x-input-group>
 
             @if($uso_de_predio === 'mixto')
 
-                <div style="flex: 1; padding: 10px; ">
-                    <x-label for="valor_construccion_vivienda" value="{{ __('Valor de construcción de la vivienda (solo en uso mixto)') }}" />
-                    <x-input type="number" id="valor_construccion_vivienda" wire:model.live="valor_construccion_vivienda" />
-                    <x-input-error for="valor_construccion_vivienda" class="mt-2" />
-                </div>
+                <x-input-group for="valor_construccion_vivienda" label="Valor de construcción de la vivienda (solo en uso mixto)" :error="$errors->first('valor_construccion_vivienda')" class="w-full">
 
-                <div style="flex: 1; padding: 10px; ">
-                    <x-label for="valor_construccion_otro" value="{{ __('Valor de construcción de otro uso (solo en uso mixto)') }}" />
-                    <x-input type="number" id="valor_construccion_otro" wire:model.live="valor_construccion_otro" />
-                    <x-input-error for="valor_construccion_otro" class="mt-2" />
-                </div>
+                    <x-input-text type="number" id="valor_construccion_vivienda" wire:model="valor_construccion_vivienda" />
 
+                </x-input-group>
+
+                <x-input-group for="valor_construccion_otro" label="Valor de construcción de otro uso (solo en uso mixto)" :error="$errors->first('valor_construccion_otro')" class="w-full">
+
+                    <x-input-text type="number" id="valor_construccion_otro" wire:model="valor_construccion_otro" />
+
+                </x-input-group>
 
             @endif
 
-            <div style="flex: 1; padding: 10px; ">
-                <x-label for="porcentaje_adquisicion" value="{{ __('Porcentaje (en caso de aplicar)') }}" />
-                <x-input type="number" id="porcentaje_adquisicion" wire:model.live="porcentaje_adquisicion" />
-                <x-input-error for="porcentaje_adquisicion" class="mt-2" />
-            </div>
+            <x-input-group for="porcentaje_adquisicion" label="Porcentaje (en caso de aplicar)" :error="$errors->first('porcentaje_adquisicion')" class="w-full">
 
+                <x-input-text type="number" id="porcentaje_adquisicion" wire:model="porcentaje_adquisicion" />
 
+            </x-input-group>
 
             <div class="w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
 
@@ -130,78 +110,72 @@
 
         </div>
 
-        {{-- @if($aviso->valor_isai) --}}
+        <div class="w-full lg:w-1/6 mx-auto space-y-3">
 
-            <div class="w-full lg:w-1/6 mx-auto space-y-3">
+            <x-input-group for="base_gravable" label="Base gravable" class="w-full">
 
-                <x-input-group for="base_gravable" label="Base gravable" class="w-full">
+                <x-input type="number" id="base_gravable" wire:model="base_gravable" readonly/>
 
-                    <x-input type="number" id="base_gravable" wire:model="base_gravable" readonly/>
+            </x-input-group>
 
-                </x-input-group>
+            <x-input-group for="reduccion" label="Reducción" class="w-full">
 
-                <x-input-group for="reduccion" label="Reducción" class="w-full">
+                <x-input type="number" id="reduccion" wire:model="reduccion" readonly/>
 
-                    <x-input type="number" id="reduccion" wire:model="reduccion" readonly/>
+            </x-input-group>
 
-                </x-input-group>
+            <x-input-group for="valor_base" label="Valor base"  class="w-full">
 
-                <x-input-group for="valor_base" label="Valor base"  class="w-full">
+                <x-input type="number" id="valor_base" wire:model="valor_base" readonly/>
 
-                    <x-input type="number" id="valor_base" wire:model="valor_base" readonly/>
+            </x-input-group>
 
-                </x-input-group>
+            <x-input-group for="" label="Tasa (%)"  class="w-full">
 
-                <x-input-group for="" label="Tasa (%)"  class="w-full">
+                <x-input type="number" id="" value="2" readonly/>
 
-                    <x-input type="number" id="" value="2" readonly/>
+            </x-input-group>
 
-                </x-input-group>
+            <x-input-group for="valor_isai" label="ISAI" class="w-full">
 
-                <x-input-group for="valor_isai" label="ISAI" class="w-full">
+                <x-input type="number" id="valor_isai" wire:model="valor_isai" readonly/>
 
-                    <x-input type="number" id="valor_isai" wire:model="valor_isai" readonly/>
+            </x-input-group>
 
-                </x-input-group>
+            <x-input-group for="multas" label="Multas" class="w-full">
 
-                <x-input-group for="multas" label="Multas" class="w-full">
+                <x-input type="number" id="multas" wire:model="multas" readonly/>
 
-                    <x-input type="number" id="multas" wire:model="multas" readonly/>
+            </x-input-group>
 
-                </x-input-group>
+            <x-input-group for="recargos" label="Recargos" class="w-full">
 
-                <x-input-group for="recargos" label="Recargos" class="w-full">
+                <x-input type="number" id="recargos" wire:model="recargos" readonly/>
 
-                    <x-input type="number" id="recargos" wire:model="recargos" readonly/>
+            </x-input-group>
 
-                </x-input-group>
+            <x-input-group for="total" label="Total" class="w-full">
 
-                <x-input-group for="total" label="Total" class="w-full">
+                <x-input type="number" id="total" wire:model="total" readonly/>
 
-                    <x-input type="number" id="total" wire:model="total" readonly/>
+            </x-input-group>
 
-                </x-input-group>
-
-            </div>
-
-        {{-- @endif --}}
-
-
+        </div>
 
     </div>
+
     @if($uso_de_predio === 'mixto')
-        <h4
-                class="text-2xl tracking-widest py-1 px-6 text-gray-600 rounded-xl border-b-2 border-gray-500 font-thin mb-6  bg-white">
-                Cálculos parciales cuando el uso es mixto
 
+        <x-h4>Cálculos parciales cuando el uso es mixto</x-h4>
 
-        </h4>
         <div class="grid md:grid-cols-4 gap-4">
 
             <div class="bg-white p-4 rounded-lg w-full shadow-lg mb-5 text-gray-600 space-y-1">
+
                 <div class="grid md:grid-cols-2 gap-4">
                     <strong>Porcentaje (%)</strong>
                 </div>
+
                 <div class="grid md:grid-cols-2 gap-4">
                     <x-input-group for="porcentaje_vivienda" label="Vivienda" class="w-full">
 
@@ -209,6 +183,7 @@
 
                     </x-input-group>
                 </div>
+
                 <div class="grid md:grid-cols-2 gap-4">
                     <x-input-group for="porcentaje_otro_uso" label="Otro uso" class="w-full">
 
@@ -216,6 +191,7 @@
 
                     </x-input-group>
                 </div>
+
                 <div class="grid md:grid-cols-2 gap-4">
                     <x-input-group for="total_porcentajes" label="Total" class="w-full">
 
@@ -225,10 +201,13 @@
                 </div>
 
             </div>
+
             <div class="bg-white p-4 rounded-lg w-full shadow-lg mb-5 text-gray-600 space-y-1">
+
                 <div class="grid md:grid-cols-2 gap-4">
                     <strong>Valor</strong>
                 </div>
+
                 <div class="grid md:grid-cols-2 gap-4">
                     <x-input-group for="valor_total_vivienda" label="Vivienda" class="w-full">
 
@@ -236,6 +215,7 @@
 
                     </x-input-group>
                 </div>
+
                 <div class="grid md:grid-cols-2 gap-4">
                     <x-input-group for="valor_total_otro_uso" label="Otro uso" class="w-full">
 
@@ -243,6 +223,7 @@
 
                     </x-input-group>
                 </div>
+
                 <div class="grid md:grid-cols-2 gap-4">
                     <x-input-group for="total_valores" label="Total" class="w-full">
 
@@ -250,11 +231,15 @@
 
                     </x-input-group>
                 </div>
+
             </div>
+
             <div class="bg-white p-4 rounded-lg w-full shadow-lg mb-5 text-gray-600 space-y-1">
+
                 <div class="grid md:grid-cols-2 gap-4">
                     <strong>Reducción</strong>
                 </div>
+
                 <div class="grid md:grid-cols-2 gap-4">
                     <x-input-group for="reduccion_vivienda" label="Vivienda" class="w-full">
 
@@ -262,6 +247,7 @@
 
                     </x-input-group>
                 </div>
+
                 <div class="grid md:grid-cols-2 gap-4">
                     <x-input-group for="reduccion_otro_uso" label="Otro uso" class="w-full">
 
@@ -269,6 +255,7 @@
 
                     </x-input-group>
                 </div>
+
                 <div class="grid md:grid-cols-2 gap-4">
                     <x-input-group for="reduccion" label="Total" class="w-full">
 
@@ -278,10 +265,9 @@
                 </div>
 
             </div>
-            <div class="bg-white p-4 rounded-lg w-full shadow-lg mb-5 text-gray-600 space-y-1">
-            </div>
 
         </div>
+
     @endif
 
 </div>

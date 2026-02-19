@@ -321,7 +321,7 @@
 
     <h4 class="text-lg mb-5 text-center">Ubicación del predio</h4>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3 items-start">
+    <div class="md:grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3 items-end space-y-2 md:space-y-0">
 
         <div class="flex-auto ">
 
@@ -796,7 +796,7 @@
 
 </div>
 
-<div class="bg-white rounded-lg p-3 flex gap-3 mb-3 shadow-lg">
+<div class="md:grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 items-end space-y-2 md:space-y-0 p-4 bg-white shadow-lg mb-5">
 
     <x-input-group for="predio.superficie_total_terreno" label="Sup. de terreno (mts.)" :error="$errors->first('predio.superficie_total_terreno')" class="w-full">
 
