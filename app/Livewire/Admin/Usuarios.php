@@ -6,7 +6,7 @@ use App\Models\Rol;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Constantes\Constantes;
+use App\Models\Oficina;
 use App\Traits\ComponentesTrait;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -147,12 +147,15 @@ class Usuarios extends Component
 
         $this->roles = Rol::where('id', '!=', 1)->select('id', 'name')->orderBy('name')->get();
 
+        $this->oficinas = Oficina::select('id', 'cabecera', 'nombre')->whereNull('cabecera')->orderBy('nombre')->get();
+
     }
 
     public function render()
     {
 
-        $usuarios = User::with('creadoPor', 'actualizadoPor')
+        $usuarios = User::select('id', 'name', 'email', 'status', 'oficina_id', 'clave', 'creado_por', 'actualizado_por', 'created_at', 'updated_at', 'profile_photo_path')
+                            ->with('creadoPor:id,name', 'actualizadoPor:id,name')
                             ->where(function($q){
                                 $q->where('name', 'LIKE', '%' . $this->search . '%');
                             })

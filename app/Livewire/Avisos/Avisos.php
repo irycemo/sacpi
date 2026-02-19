@@ -220,7 +220,15 @@ class Avisos extends Component
 
         $this->año = now()->year;
 
-        $this->tasa_recargos_isai = auth()->user()->oficina->parametros->where('ejercicio_fiscal', now()->year)->first()->tasa_recargos_isai;
+        $parametros = auth()->user()->oficina->parametros->where('ejercicio_fiscal', now()->year)->first();
+
+        if(! $parametros){
+
+            abort(403, 'No hay parametros para la oficina del usuario actual.');
+
+        }
+
+        $this->tasa_recargos_isai = $parametros->tasa_recargos_isai;
 
     }
 

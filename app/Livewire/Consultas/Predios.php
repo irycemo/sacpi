@@ -38,7 +38,8 @@ class Predios extends Component
 
     public function render()
     {
-        $predios = Predio::with('actualizadoPor')
+        $predios = Predio::select('id', 'localidad', 'oficina', 'tipo_predio', 'numero_registro', 'creado_por', 'actualizado_por', 'created_at', 'updated_at', 'status')
+                            ->with('actualizadoPor:id,name')
                             ->when($this->filters['localidad'], fn($q, $localidad) => $q->where('localidad', $localidad))
                             ->when($this->filters['oficina'], fn($q, $oficina) => $q->where('oficina', $oficina))
                             ->when($this->filters['tipo'], fn($q, $tipo) => $q->where('tipo_predio', $tipo))

@@ -56,5 +56,13 @@
     "If you did not receive the email": "Si no has recibido el email",
     "click here to request another": "pulsa aquí para que te enviemos otro",
     "All rights reserved.":  "Todos los derechos reservados.",
-    "Whoops! Something went wrong.": "Algo salió mal."
+    "Whoops! Something went wrong.": "Algo salió mal.",
+    "This action is unauthorized.": "Esta acción no esta autorizada.",
+    "Unauthorized": "Sin autorización",
+    "Forbidden": "Prohibido",
+    "Not Found": "No se encontro el recurso",
+    "Page Expired": "Página expirada",
+    "Too Many Requests": "Demasiadas solicitudes",
+    "Server Error": "Error del servidor",
+    "Service Unavailable": "Servicio no disponible"
 }

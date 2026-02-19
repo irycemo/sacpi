@@ -49,7 +49,6 @@
                 <x-table.heading sortable wire:click="sortBy('nombre')" :direction="$sort === 'nombre' ? $direction : null" >Nombre</x-table.heading>
                 <x-table.heading sortable wire:click="sortBy('oficina')" :direction="$sort === 'oficina' ? $direction : null" >Oficina</x-table.heading>
                 <x-table.heading sortable wire:click="sortBy('localidad')" :direction="$sort === 'localidad' ? $direction : null" >Localidad</x-table.heading>
-                <x-table.heading sortable wire:click="sortBy('titular')" :direction="$sort === 'titular' ? $direction : null" >Titular</x-table.heading>
                 <x-table.heading sortable wire:click="sortBy('tipo')" :direction="$sort === 'tipo' ? $direction : null" >Tipo</x-table.heading>
                 <x-table.heading sortable wire:click="sortBy('created_at')" :direction="$sort === 'created_at' ? $direction : null">Registro</x-table.heading>
                 <x-table.heading sortable wire:click="sortBy('updated_at')" :direction="$sort === 'updated_at' ? $direction : null">Actualizado</x-table.heading>
@@ -100,14 +99,6 @@
                             <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 text-[10px] text-white font-bold uppercase rounded-br-xl">Localidad</span>
 
                             {{ $oficina->localidad }}
-
-                        </x-table.cell>
-
-                        <x-table.cell>
-
-                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 text-[10px] text-white font-bold uppercase rounded-br-xl">Titular</span>
-
-                            <p class="mt-2">{{ $oficina->titular }}</p>
 
                         </x-table.cell>
 
@@ -291,12 +282,6 @@
 
                     </x-input-group>
 
-                    <x-input-group for="modelo_editar.titular" label="Titular" :error="$errors->first('modelo_editar.titular')" class="w-full">
-
-                        <x-input-text id="modelo_editar.titular" wire:model="modelo_editar.titular" />
-
-                    </x-input-group>
-
                 </div>
 
                 <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-3">
@@ -310,23 +295,6 @@
                     <x-input-group for="modelo_editar.email" label="Correo" :error="$errors->first('modelo_editar.email')" class="w-full">
 
                         <x-input-text type="email" id="modelo_editar.email" wire:model="modelo_editar.email" />
-
-                    </x-input-group>
-
-                </div>
-
-
-                <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-3">
-
-                    <x-input-group for="modelo_editar.valuador_municipal" label="Valuador municipal" :error="$errors->first('modelo_editar.valuador_municipal')" class="w-full">
-
-                        <x-input-text id="modelo_editar.valuador_municipal" wire:model="modelo_editar.valuador_municipal" />
-
-                    </x-input-group>
-
-                    <x-input-group for="modelo_editar.autoridad_municipal" label="Autoridad municipal" :error="$errors->first('modelo_editar.autoridad_municipal')" class="w-full">
-
-                        <x-input-text id="modelo_editar.autoridad_municipal" wire:model="modelo_editar.autoridad_municipal" />
 
                     </x-input-group>
 

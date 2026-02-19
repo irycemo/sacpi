@@ -44,6 +44,8 @@
                 <x-table.heading sortable wire:click="sortBy('diario')" :direction="$sort === 'diario' ? $direction : null" >Diario</x-table.heading>
                 <x-table.heading sortable wire:click="sortBy('mensual')" :direction="$sort === 'mensual' ? $direction : null" >Mensual</x-table.heading>
                 <x-table.heading sortable wire:click="sortBy('anual')" :direction="$sort === 'anual' ? $direction : null" >Anual</x-table.heading>
+                <x-table.heading sortable wire:click="sortBy('minimo_urbano')" :direction="$sort === 'minimo_urbano' ? $direction : null" >M. Urbano</x-table.heading>
+                <x-table.heading sortable wire:click="sortBy('minimo_rustico')" :direction="$sort === 'minimo_rustico' ? $direction : null" >M. Rustico</x-table.heading>
                 <x-table.heading sortable wire:click="sortBy('created_at')" :direction="$sort === 'created_at' ? $direction : null">Registro</x-table.heading>
                 <x-table.heading sortable wire:click="sortBy('updated_at')" :direction="$sort === 'updated_at' ? $direction : null">Actualizado</x-table.heading>
                 <x-table.heading >Acciones</x-table.heading>
@@ -56,100 +58,111 @@
 
                     <x-table.row wire:loading.class.delaylongest="opacity-50" wire:key="row-{{ $uma->id }}">
 
-                        <x-table.cell>
-
-                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 text-[10px] text-white font-bold uppercase rounded-br-xl">Año</span>
+                        <x-table.cell title="Año">
 
                             {{ $uma->año }}
 
                         </x-table.cell>
 
-                        <x-table.cell>
-
-                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 text-[10px] text-white font-bold uppercase rounded-br-xl">Diario</span>
+                        <x-table.cell title="Diario">
 
                             ${{ number_format($uma->diario, 2) }}
 
                         </x-table.cell>
 
-                        <x-table.cell>
-
-                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 text-[10px] text-white font-bold uppercase rounded-br-xl">Mensual</span>
+                        <x-table.cell title="Mensual">
 
                             ${{ number_format($uma->mensual, 2) }}
 
                         </x-table.cell>
 
-                        <x-table.cell>
-
-                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 text-[10px] text-white font-bold uppercase rounded-br-xl">Anual</span>
+                        <x-table.cell title="Anual">
 
                             ${{ number_format($uma->anual, 2) }}
 
                         </x-table.cell>
 
-                        <x-table.cell>
+                        <x-table.cell title="M. Urbano">
 
-                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 text-[10px] text-white font-bold uppercase rounded-br-xl">Registrado</span>
-
-
-                            <span class="font-semibold">@if($uma->creadoPor != null)Registrado por: {{$uma->creadoPor->name}} @else Registro: @endif</span> <br>
-
-                            {{ $uma->created_at }}
+                            ${{ number_format($uma->minimo_urbano, 2) }}
 
                         </x-table.cell>
 
-                        <x-table.cell>
+                        <x-table.cell title="M. Rustico">
 
-                            <span class="font-semibold">@if($uma->actualizadoPor != null)Actualizado por: {{$uma->actualizadoPor->name}} @else Actualizado: @endif</span> <br>
-
-                            {{ $uma->updated_at }}
+                            ${{ number_format($uma->minimo_rustico, 2) }}
 
                         </x-table.cell>
 
-                        <x-table.cell>
+                        <x-table.cell title="Registrado">
 
-                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 text-[10px] text-white font-bold uppercase rounded-br-xl">Acciones</span>
+                            <p class="mt-2">
 
-                            <div class="flex justify-center lg:justify-start gap-2">
+                                <span class="font-semibold">@if($uma->creadoPor != null)Registrado por: {{$uma->creadoPor->name}} @else Registro: @endif</span> <br>
 
-                                @can('Editar uma')
+                                {{ $uma->created_at }}
 
-                                    <x-button-blue
-                                        wire:click="abrirModalEditar({{$uma->id}})"
-                                        wire:loading.attr="disabled"
-                                        wire:target="abiriModalEditar({{$uma->id}})"
-                                    >
+                            </p>
 
+                        </x-table.cell>
 
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4 mr-3">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        <x-table.cell title="Actualizado">
+
+                            <p class="mt-2">
+
+                                <span class="font-semibold">@if($uma->actualizadoPor != null)Actualizado por: {{$uma->actualizadoPor->name}} @else Actualizado: @endif</span> <br>
+
+                                {{ $uma->updated_at }}
+
+                            </p>
+
+                        </x-table.cell>
+
+                        <x-table.cell title="Acciones">
+
+                            <div class="ml-3 relative" x-data="{ open_drop_down:false }">
+
+                                <div>
+
+                                    <button x-on:click="open_drop_down=true" type="button" class="rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                                         </svg>
 
-                                        <p>Editar</p>
+                                    </button>
 
-                                    </x-button-blue>
+                                </div>
 
-                                @endcan
+                                <div x-cloak x-show="open_drop_down" x-on:click="open_drop_down=false" x-on:click.away="open_drop_down=false" class="z-50 origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
 
+                                    @can('Editar uma')
 
-                                @can('Borrar uma')
+                                        <button
+                                            wire:click="abrirModalEditar({{ $uma->id }})"
+                                            wire:target="abrirModalEditar({{ $uma->id }})"
+                                            wire:loading.attr="disabled"
+                                            class="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+                                            role="menuitem">
+                                            Editar
+                                        </button>
 
-                                    <x-button-red
-                                        wire:click="abrirModalBorrar({{$uma->id}})"
-                                        wire:loading.attr="disabled"
-                                        wire:target="abrirModalBorrar({{$uma->id}})"
-                                    >
+                                    @endcan
 
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4 mr-3">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                        </svg>
+                                    @can('Borrar uma')
 
-                                        <p>Eliminar</p>
+                                        <button
+                                            wire:click="abrirModalBorrar({{ $uma->id }})"
+                                            wire:target="abrirModalBorrar({{ $uma->id }})"
+                                            wire:loading.attr="disabled"
+                                            class="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+                                            role="menuitem">
+                                            Borrar
+                                        </button>
 
-                                    </x-button-red>
+                                    @endcan
 
-                                @endcan
+                                </div>
 
                             </div>
 
@@ -229,7 +242,7 @@
 
                 <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-5">
 
-                    <x-input-group for="modelo_editar.mensual" label="Mnsual" :error="$errors->first('modelo_editar.mensual')" class="w-full">
+                    <x-input-group for="modelo_editar.mensual" label="Mensual" :error="$errors->first('modelo_editar.mensual')" class="w-full">
 
                         <x-input-text type="number" id="modelo_editar.mensual" wire:model="modelo_editar.mensual" />
 
@@ -238,6 +251,22 @@
                     <x-input-group for="modelo_editar.anual" label="Anual" :error="$errors->first('modelo_editar.anual')" class="w-full">
 
                         <x-input-text type="number" id="modelo_editar.anual" wire:model="modelo_editar.anual" />
+
+                    </x-input-group>
+
+                </div>
+
+                <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-5">
+
+                    <x-input-group for="modelo_editar.minimo_urbano" label="M. urbano" :error="$errors->first('modelo_editar.minimo_urbano')" class="w-full">
+
+                        <x-input-text type="number" id="modelo_editar.minimo_urbano" wire:model="modelo_editar.minimo_urbano" />
+
+                    </x-input-group>
+
+                    <x-input-group for="modelo_editar.minimo_rustico" label="M. rustico" :error="$errors->first('modelo_editar.minimo_rustico')" class="w-full">
+
+                        <x-input-text type="number" id="modelo_editar.minimo_rustico" wire:model="modelo_editar.minimo_rustico" />
 
                     </x-input-group>
 

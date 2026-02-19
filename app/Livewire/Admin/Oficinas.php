@@ -172,11 +172,8 @@ class Oficinas extends Component
                         ->orWhere('localidad', 'LIKE', '%'. $this->search . '%')
                         ->orWhere('nombre', 'LIKE', '%'. $this->search . '%')
                         ->orWhere('ubicacion', 'LIKE', '%'. $this->search . '%')
-                        ->orWhere('titular', 'LIKE', '%'. $this->search . '%')
                         ->orWhere('email', 'LIKE', '%'. $this->search . '%')
                         ->orWhere('telefonos', 'LIKE', '%'. $this->search . '%')
-                        ->orWhere('autoridad_municipal', 'LIKE', '%'. $this->search . '%')
-                        ->orWhere('valuador_municipal', 'LIKE', '%'. $this->search . '%')
                         ->orderBy($this->sort, $this->direction)
                         ->paginate($this->pagination);
 

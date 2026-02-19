@@ -110,7 +110,8 @@ class Umas extends Component
     #[Computed]
     public function umas(){
 
-        return Uma::with('creadoPor', 'actualizadoPor')
+        return Uma::select('id', 'año', 'diario', 'mensual', 'anual', 'creado_por', 'actualizado_por', 'created_at', 'updated_at', 'minimo_rustico', 'minimo_urbano')
+                    ->with('creadoPor:id,name', 'actualizadoPor:id,name')
                     ->where('año', 'like', '%' . $this->search .'%')
                     ->orderBy($this->sort, $this->direction)
                     ->paginate($this->pagination);

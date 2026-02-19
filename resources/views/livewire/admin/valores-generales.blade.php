@@ -102,45 +102,49 @@
 
                             <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 text-[10px] text-white font-bold uppercase rounded-br-xl">Acciones</span>
 
-                            <div class="flex justify-center lg:justify-start gap-2">
+                            <div class="ml-3 relative" x-data="{ open_drop_down:false }">
 
-                                @can('Editar valor')
+                                <div>
 
-                                    <x-button-blue
-                                        wire:click="abrirModalEditar({{$valor->id}})"
-                                        wire:loading.attr="disabled"
-                                        wire:target="abiriModalEditar({{$valor->id}})"
-                                    >
+                                    <button x-on:click="open_drop_down=true" type="button" class="rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
 
-
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4 mr-3">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                                         </svg>
 
-                                        <p>Editar</p>
+                                    </button>
 
-                                    </x-button-blue>
+                                </div>
 
-                                @endcan
+                                <div x-cloak x-show="open_drop_down" x-on:click="open_drop_down=false" x-on:click.away="open_drop_down=false" class="z-50 origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
 
+                                    @can('Editar valor')
 
-                                @can('Borrar valor')
+                                        <button
+                                            wire:click="abrirModalEditar({{ $valor->id }})"
+                                            wire:target="abrirModalEditar({{ $valor->id }})"
+                                            wire:loading.attr="disabled"
+                                            class="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+                                            role="menuitem">
+                                            Editar
+                                        </button>
 
-                                    <x-button-red
-                                        wire:click="abrirModalBorrar({{$valor->id}})"
-                                        wire:loading.attr="disabled"
-                                        wire:target="abrirModalBorrar({{$valor->id}})"
-                                    >
+                                    @endcan
 
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4 mr-3">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                        </svg>
+                                    @can('Borrar valor')
 
-                                        <p>Eliminar</p>
+                                        <button
+                                            wire:click="abrirModalBorrar({{ $valor->id }})"
+                                            wire:target="abrirModalBorrar({{ $valor->id }})"
+                                            wire:loading.attr="disabled"
+                                            class="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+                                            role="menuitem">
+                                            Borrar
+                                        </button>
 
-                                    </x-button-red>
+                                    @endcan
 
-                                @endcan
+                                </div>
 
                             </div>
 

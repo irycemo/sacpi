@@ -19,7 +19,7 @@ class Descuentos extends Component
 
     protected function rules(){
         return [
-            'modelo_editar.nombre' => 'required|string',
+            'modelo_editar.tipo' => 'required|string',
             'modelo_editar.porcentaje' => 'nullable|numeric',
             'modelo_editar.fecha_inicial' => 'required|date',
             'modelo_editar.fecha_final' => 'required|date',
@@ -110,8 +110,9 @@ class Descuentos extends Component
     #[Computed]
     public function descuentos(){
 
-        return Descuento::with('creadoPor', 'actualizadoPor')
-                    ->where('nombre', 'like', '%' . $this->search .'%')
+        return Descuento::select('id', 'tipo', 'accesorio', 'porcentaje', 'fecha_inicial', 'fecha_final', 'creado_por', 'actualizado_por', 'created_at', 'updated_at')
+                    ->with('creadoPor:id,name', 'actualizadoPor:id,name')
+                    ->where('tipo', 'like', '%' . $this->search .'%')
                     ->orderBy($this->sort, $this->direction)
                     ->paginate($this->pagination);
 

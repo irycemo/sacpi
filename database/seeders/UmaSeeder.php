@@ -2,16 +2,18 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use App\Models\Uma;
+use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class UmaSeeder extends Seeder
 {
     /**
      * Run the database seeds.
+     *
+     * @return void
      */
-    public function run(): void
+    public function run()
     {
         Uma::create([
             'año' => 2016,
@@ -99,8 +101,8 @@ class UmaSeeder extends Seeder
             'diario' => 113.14,
             'mensual' => 3439.46,
             'anual' => 41273.52,
-            'minimo_rustico' => 1358,
-            'minimo_urbano' => 2829
+            'minimo_rustico' => 2829,
+            'minimo_urbano' => 1358
         ]);
     }
 }
