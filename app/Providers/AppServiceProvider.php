@@ -32,11 +32,11 @@ class AppServiceProvider extends ServiceProvider
             URL::forceScheme('https');
 
             Livewire::setScriptRoute(function ($handle) {
-                return Route::get('/sgc/public/vendor/livewire/livewire.js', $handle);
+                return Route::get('/sacpi/public/vendor/livewire/livewire.js', $handle);
             });
 
             Livewire::setUpdateRoute(function ($handle) {
-                return Route::post('/sgc/livewire/update', $handle);
+                return Route::post('/sacpi/livewire/update', $handle);
             });
 
         }
@@ -44,11 +44,11 @@ class AppServiceProvider extends ServiceProvider
         if(app()->environment('staging')){
 
             Livewire::setScriptRoute(function ($handle) {
-                return Route::get('/sgc/public/vendor/livewire/livewire.js', $handle);
+                return Route::get('/sacpi/public/vendor/livewire/livewire.js', $handle);
             });
 
             Livewire::setUpdateRoute(function ($handle) {
-                return Route::post('/sgc/livewire/update', $handle);
+                return Route::post('/sacpi/livewire/update', $handle);
             });
 
         }
