@@ -51,7 +51,6 @@ class CuotasMinimas extends Component
 
         try {
 
-            $this->modelo_editar->creado_por = auth()->user()->id;
             $this->modelo_editar->save();
 
             $this->resetearTodo($borrado = true);
