@@ -1,5 +1,19 @@
 <div class="mb-5 bg-white rounded-lg shadow-xl p-4 w-full lg:w-1/2 mx-auto">
 
+    <div class="mb-5">
+
+        @if(!app()->isProduction())
+
+            <x-button-red
+                    wire:click="simular"
+                    wire:loading.attr="disabled">
+                Simular
+            </x-button-red>
+
+        @endif
+
+    </div>
+
     <x-table>
 
         <x-slot name="head">

@@ -37,6 +37,7 @@ class Usuarios extends Component
             'modelo_editar.name' => 'required',
             'modelo_editar.email' => 'required|email|unique:users,email,' . $this->modelo_editar->id,
             'modelo_editar.status' => 'required|in:activo,inactivo',
+            'modelo_editar.oficina_id' => 'required',
             'role' => 'required',
          ];
     }
