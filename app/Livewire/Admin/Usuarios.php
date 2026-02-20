@@ -70,6 +70,7 @@ class Usuarios extends Component
 
             DB::transaction(function () {
 
+                $this->modelo_editar->clave = User::max('clave') + 1;
                 $this->modelo_editar->password = bcrypt('sistema');
                 $this->modelo_editar->creado_por = auth()->user()->id;
                 $this->modelo_editar->save();

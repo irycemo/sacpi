@@ -29,6 +29,8 @@ class Rezagos extends Component
 
         }
 
+        $this->predio->refresh();
+
     }
 
     public function render()
