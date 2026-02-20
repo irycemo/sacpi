@@ -18,7 +18,7 @@ Artisan::command('rezagos', function(){
         for($i = 1; $i < 7; $i++){
 
             Factura::create([
-                'predio_id' => 142,
+                'predio_id' => 151,
                 'status' => 'rezago',
                 'ejercicio_fiscal' => $años[$j],
                 'cuota' => 'superior',

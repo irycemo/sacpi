@@ -125,7 +125,7 @@
 
             <div class="tab-panel" :class="{ 'active': activeTab === 1 }" x-show.transition.in.opacity.duration.800="activeTab === 1"  wire:key="tab-1">
 
-                @include('predio.rezagos')
+                @livewire('predio.rezagos', ['predio' => $predio, ])
 
             </div>
 
