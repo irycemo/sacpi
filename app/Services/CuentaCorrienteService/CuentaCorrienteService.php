@@ -109,6 +109,10 @@ class CuentaCorrienteService{
 
             }
 
+        }else{
+
+            $subtotal = round($factura->total) + round($actualizacion) + round($recargos) + round($multa);
+
         }
 
         return [
