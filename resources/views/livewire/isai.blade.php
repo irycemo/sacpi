@@ -40,19 +40,19 @@
 
             <x-input-group for="fecha_reduccion" label="Fecha de reducción" :error="$errors->first('fecha_reduccion')" class="w-full">
 
-                <x-input-text type="number" id="fecha_reduccion" wire:model="fecha_reduccion" />
+                <x-input-text type="date" id="fecha_reduccion" wire:model="fecha_reduccion" />
 
             </x-input-group>
 
             <x-input-group for="fecha_limite_pago" label="Fecha límite de pago" :error="$errors->first('fecha_limite_pago')" class="w-full">
 
-                <x-input-text type="number" id="fecha_limite_pago" wire:model="fecha_limite_pago" />
+                <x-input-text type="date" id="fecha_limite_pago" wire:model="fecha_limite_pago" />
 
             </x-input-group>
 
             <x-input-group for="fecha_presentacion" label="Fecha de presentación" :error="$errors->first('fecha_presentacion')" class="w-full">
 
-                <x-input-text type="number" id="fecha_presentacion" wire:model="fecha_presentacion" />
+                <x-input-text type="date" id="fecha_presentacion" wire:model="fecha_presentacion" />
 
             </x-input-group>
 

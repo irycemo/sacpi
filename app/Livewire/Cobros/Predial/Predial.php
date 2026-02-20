@@ -699,6 +699,12 @@ class Predial extends Component
                                     ->where('ejercicio_fiscal', now()->year)
                                     ->first();
 
+        if(! $this->ejercicio_fiscal){
+
+            abort(403, 'No se han registrado los parametros para el año actual.');
+
+        }
+
         if($this->predio->getKey()){
 
             $data = (new CuotaService())->execute($this->ejercicio_fiscal, $this->predio->valor_catastral, $this->predio->anioFechaEfectos(), $this->predio->tipo_predio);
