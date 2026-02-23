@@ -55,6 +55,7 @@ class RezagoService{
         $multa = 0;
         $subtotal = 0;
         $requerimiento = 0;
+        $mesesvencidos = 0;
 
         foreach($facturas as $factura){
 
