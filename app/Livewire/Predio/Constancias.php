@@ -27,7 +27,7 @@ class Constancias extends Component
                 'creado_por' => auth()->id()
             ]);
 
-            $tesorero = $this->tasa_recargos_isai = auth()->user()->oficina->parametros->where('ejercicio_fiscal', now()->year)->first()->nombre_titular;
+            $tesorero =  auth()->user()->oficina->parametros->where('ejercicio_fiscal', now()->year)->first()->nombre_titular;
 
             $pdf = Pdf::loadView('constancias.constancia', [
                 'constancia' => $constancia,
@@ -72,7 +72,7 @@ class Constancias extends Component
 
             $pdf = Pdf::loadView('constancias.constancia', [
                 'constancia' => $constancia,
-                'tesorero' => auth()->user()->oficina->tesorero_municipal,
+                'tesorero' => auth()->user()->oficina->parametros->where('ejercicio_fiscal', now()->year)->first()->nombre_titular,
                 'predio' => $this->predio,
                 'oficina' => auth()->user()->oficina
             ]);
