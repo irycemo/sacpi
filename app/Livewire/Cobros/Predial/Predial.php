@@ -290,6 +290,8 @@ class Predial extends Component
 
         $this->subtotal = (collect($this->cuenta_corriente)->sum('subtotal') + collect($this->rezagos)->sum('subtotal'));
 
+        $this->calcularTotal();
+
     }
 
     public function construirCuentaCorriente(){
@@ -326,10 +328,10 @@ class Predial extends Component
                 'cuota' => $this->tipo_couta,
                 'rezago_años' => $this->rezago_años,
                 'rezago_impuesto' => $this->rezago_impuesto,
-                'cuenta_corriente_impuesto' => $this->cuenta_corriente_impuesto,
-                'cuenta_corriente_recargos' => $this->cuenta_corriente_recargos,
-                'cuenta_corriente_multas' => $this->cuenta_corriente_multas,
-                'cuenta_corriente_reqerimientos' => $this->cuenta_corriente_reqerimientos,
+                'cuenta_corriente_impuesto' => collect($this->cuenta_corriente)->sum('impuesto'),
+                'cuenta_corriente_recargos' => collect($this->cuenta_corriente)->sum('recargos'),
+                'cuenta_corriente_multas' => collect($this->cuenta_corriente)->sum('multas'),
+                'cuenta_corriente_reqerimientos' => collect($this->cuenta_corriente)->sum('requerimientos'),
                 'total' => $this->total_a_pagar,
                 'total_letra' => $total_letra,
                 'descuentos' => collect($this->descuentos)->sum('monto')

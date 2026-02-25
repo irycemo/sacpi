@@ -159,9 +159,9 @@
 
         <div>
 
-            <p class="titulo">{{ $oficina->tipo }}</p>
+            <p class="titulo">Sistema para la Administración de las Contribuciones sobre la Propiedad Inmobiliaria</p>
 
-            <p class="titulo">{{ $oficina->nombre }}</p>
+            <p class="titulo">{{ $oficina->tipo }} de {{ $oficina->nombre }}</p>
 
             <p class="titulo">Comprobante de recibo de pago</p>
 
@@ -302,60 +302,70 @@
         </p>
 
         <table>
-            <thead>
-                <tr>
-                <th>Descripción</th>
-                <th>Importe</th>
-                </tr>
-            </thead>
+
             <tbody>
                 <tr>
-                <td>impuesto predial</td>
-                <td>${{ number_format($cuenta_corriente_impuesto, 2) }}</td>
+                    <td style="padding-right: 150px">
+                        <table>
+                            <thead>
+                                <tr>
+                                <th>Descripción</th>
+                                <th>Importe</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                <td>impuesto predial</td>
+                                <td style="text-align: right">${{ number_format($cuenta_corriente_impuesto, 2) }}</td>
+                                </tr>
+                                <tr>
+                                <td>impuesto predial (rezago)</td>
+                                <td style="text-align: right">${{ number_format($rezago_impuesto, 2) }}</td>
+                                </tr>
+                                <tr>
+                                <td>recargos de impuesto predial</td>
+                                <td style="text-align: right">${{ number_format($cuenta_corriente_recargos, 2) }}</td>
+                                </tr>
+                                <tr>
+                                <td>multa del impuesto predial</td>
+                                <td style="text-align: right">${{ number_format($cuenta_corriente_multas, 2) }}</td>
+                                </tr>
+                                <tr>
+                                <td>honorarios y gastos de ejecución</td>
+                                <td style="text-align: right">${{ number_format($cuenta_corriente_reqerimientos, 2) }}</td>
+                                </tr>
+                                <tr>
+                                <td>federación de la pequeña propiedad</td>
+                                <td style="text-align: right">$0</td>
+                                </tr>
+                                <tr>
+                                <td>Descuento</td>
+                                <td style="text-align: right">${{ number_format($descuentos) }}</td>
+                                </tr>
+                                <tr>
+                                <td>Total</td>
+                                <td style="text-align: right">${{ number_format($total, 2) }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+
+                    <td >
+                        <p style="text-align: center">Sello de la oficina</p>
+                    </td>
+
                 </tr>
-                <tr>
-                <td>impuesto predial (rezago)</td>
-                <td>${{ number_format($rezago_impuesto, 2) }}</td>
-                </tr>
-                <tr>
-                <td>recargos de impuesto predial</td>
-                <td>${{ number_format($cuenta_corriente_recargos, 2) }}</td>
-                </tr>
-                <tr>
-                <td>multa del impuesto predial</td>
-                <td>${{ number_format($cuenta_corriente_multas, 2) }}</td>
-                </tr>
-                <tr>
-                <td>honorarios y gastos de ejecución</td>
-                <td>${{ number_format($cuenta_corriente_reqerimientos, 2) }}</td>
-                </tr>
-                <tr>
-                <td>federación de la pequeña propiedad</td>
-                <td>$0</td>
-                </tr>
-                <tr>
-                <td>Descuento</td>
-                <td>${{ number_format($descuentos) }}</td>
-                </tr>
-                <tr>
-                <td>Total</td>
-                <td>${{ number_format($total, 2) }}</td>
-                </tr>
+
             </tbody>
+
         </table>
 
         <p style="text-align: center;">({{ $total_letra }} pesos 0/100 m.n)</p>
-
-        <p style="text-transform: uppercase; border-bottom: gray solid 1px; text-align: center; display: inline"></p>
-        <p style="text-align: center;" >Sello</p>
 
         <p>Lo atendió: {{ $pago->creadoPor->name }}</p>
         <p>Nombre fiscal: {{ $oficina->nombre }}</p>
         <p>R.F.C.: {{ $oficina->nombre }}</p>
         <p>Domicilio fiscal: {{ $oficina->ubicacion }}</p>
-
-        <p>Nota</p>
-        <p>la determinación de los valores y procedimientos aritméticos que se realizaron para llegar a la conclusión del valor catastral del predio en referencia, se encuentran incluidos en el artículo 21 de la ley de hacienda municipal del estado de michoacán de ocampo</p>
 
     </main>
 
