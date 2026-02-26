@@ -230,6 +230,8 @@ class Avisos extends Component
 
         $this->tasa_recargos_isai = $parametros->tasa_recargos_isai;
 
+        $this->oficina = auth()->user()->oficina->oficina;
+
     }
 
     public function render()

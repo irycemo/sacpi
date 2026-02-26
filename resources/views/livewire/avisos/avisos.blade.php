@@ -28,7 +28,7 @@
 
                 <input type="number" wire:model.live.debounce.500ms="localidad" placeholder="Localidad" class="bg-white rounded-full text-sm w-24">
 
-                <input type="number" wire:model.live.debounce.500ms="oficina" placeholder="Oficina" class="bg-white rounded-full text-sm w-24">
+                <input type="number" wire:model.live.debounce.500ms="oficina" placeholder="Oficina" class="bg-white rounded-full text-sm w-24" @if(! auth()->user()->hasRole('Administrador')) readonly @endif>
 
                 <input type="number" wire:model.live.debounce.500ms="tipo_predio" placeholder="T. Predio" class="bg-white rounded-full text-sm w-24">
 
