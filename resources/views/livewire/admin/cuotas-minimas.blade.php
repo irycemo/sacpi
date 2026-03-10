@@ -41,8 +41,13 @@
             <x-slot name="head">
 
                 <x-table.heading sortable wire:click="sortBy('municipio')" :direction="$sort === 'ejercicio_fiscal' ? $direction : null" >Municipio</x-table.heading>
-                <x-table.heading sortable wire:click="sortBy('fecha_inicial')" :direction="$sort === 'valor_catastral_minimo_urbanos' ? $direction : null" >Fecha inicial</x-table.heading>
-                <x-table.heading sortable wire:click="sortBy('fecha_final')" :direction="$sort === 'valor_catastral_minimo_rusticos' ? $direction : null" >Fecha final</x-table.heading>
+                <x-table.heading sortable wire:click="sortBy('fecha_inicial')" :direction="$sort === 'fecha_inicial' ? $direction : null" >Fecha inicial</x-table.heading>
+                <x-table.heading sortable wire:click="sortBy('fecha_final')" :direction="$sort === 'fecha_final' ? $direction : null" >Fecha final</x-table.heading>
+                <x-table.heading sortable wire:click="sortBy('diario')" :direction="$sort === 'diario' ? $direction : null" >Diario</x-table.heading>
+                <x-table.heading sortable wire:click="sortBy('mensual')" :direction="$sort === 'mensual' ? $direction : null" >Mensual</x-table.heading>
+                <x-table.heading sortable wire:click="sortBy('anual')" :direction="$sort === 'anual' ? $direction : null" >Anual</x-table.heading>
+                <x-table.heading sortable wire:click="sortBy('umas')" :direction="$sort === 'umas' ? $direction : null" >Umas</x-table.heading>
+                <x-table.heading sortable wire:click="sortBy('cuota_minima')" :direction="$sort === 'cuota_minima' ? $direction : null" >Couta mínima</x-table.heading>
                 <x-table.heading sortable wire:click="sortBy('created_at')" :direction="$sort === 'created_at' ? $direction : null">Registro</x-table.heading>
                 <x-table.heading sortable wire:click="sortBy('updated_at')" :direction="$sort === 'updated_at' ? $direction : null">Actualizado</x-table.heading>
                 <x-table.heading >Acciones</x-table.heading>
@@ -70,6 +75,36 @@
                         <x-table.cell title="Fecha final">
 
                             {{ $couta->fecha_final }}
+
+                        </x-table.cell>
+
+                        <x-table.cell title="Diario">
+
+                            ${{ number_format($couta->diario, 2) }}
+
+                        </x-table.cell>
+
+                        <x-table.cell title="Mensual">
+
+                            ${{ number_format($couta->mensual, 2) }}
+
+                        </x-table.cell>
+
+                        <x-table.cell title="Anual">
+
+                            ${{ number_format($couta->anual, 2) }}
+
+                        </x-table.cell>
+
+                        <x-table.cell title="Umas">
+
+                            {{ $couta->umas }}
+
+                        </x-table.cell>
+
+                        <x-table.cell title="Couta mínima">
+
+                            ${{ number_format($couta->cuota_minima, 2) }}
 
                         </x-table.cell>
 
@@ -141,7 +176,7 @@
 
                     <x-table.row wire:key="row-empty">
 
-                        <x-table.cell colspan="9">
+                        <x-table.cell colspan="11">
 
                             <div class="bg-white text-gray-500 text-center p-5 rounded-full text-lg">
 
@@ -161,7 +196,7 @@
 
                 <x-table.row>
 
-                    <x-table.cell colspan="9" class="bg-gray-50">
+                    <x-table.cell colspan="11" class="bg-gray-50">
 
                         {{ $this->cuotas->links()}}
 
